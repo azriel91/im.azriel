@@ -16,12 +16,18 @@ namespace gl {
 
 GlImageSheet::GlImageSheet(const GLuint textureId, const int width, const int height, const int textureWidth,
         const int textureHeight, const int subImageWidth, const int subImageHeight, const int rowCount,
-        const int columnCount) :
+        const int columnCount, const vector<const GlVertexMap*>* const vertexMaps) :
 		        ImageSheet(width, height, subImageWidth, subImageHeight, rowCount, columnCount),
-		        GlImage(textureId, width, height, textureWidth, textureHeight) {
+		        GlImage(textureId, width, height, textureWidth, textureHeight),
+		        vertexMaps(vertexMaps) {
 }
 
 GlImageSheet::~GlImageSheet() {
+	for (vector<const GlVertexMap*>::const_iterator it = this->vertexMaps->begin(); it != this->vertexMaps->end(); ++it) {
+		const GlVertexMap* const vertexMap = *it;
+		delete vertexMap;
+	}
+	delete this->vertexMaps;
 }
 
 } /* namespace gl */

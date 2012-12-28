@@ -16,13 +16,28 @@ namespace image {
 ImageSheet::ImageSheet(const int width, const int height, const int subImageWidth, const int subImageHeight,
 		const int rowCount, const int columnCount) :
 				Image(width, height),
-				subImageWidth(subImageWidth),
-				subImageHeight(subImageHeight),
+				border(0),
+				columnCount(columnCount),
 				rowCount(rowCount),
-				columnCount(columnCount) {
+				subImageHeight(subImageHeight),
+				subImageWidth(subImageWidth) {
+}
+
+ImageSheet::ImageSheet(const int width, const int height, const int subImageWidth, const int subImageHeight,
+		const int rowCount, const int columnCount, const int border) :
+				Image(width, height),
+				border(border),
+				columnCount(columnCount),
+				rowCount(rowCount),
+				subImageHeight(subImageHeight),
+				subImageWidth(subImageWidth) {
 }
 
 ImageSheet::~ImageSheet() {
+}
+
+const int ImageSheet::getBorder() const {
+	return this->border;
 }
 
 const int ImageSheet::getSubImageWidth() const {
