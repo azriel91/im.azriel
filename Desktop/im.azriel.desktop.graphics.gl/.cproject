@@ -33,6 +33,7 @@
 								<option id="gnu.cpp.compiler.mingw.exe.release.option.debugging.level.2016143940" name="Debug Level" superClass="gnu.cpp.compiler.mingw.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.857527886" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;D:\libraries\SDL-1.2.15\include\SDL&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/im.azriel.desktop.graphics/lib}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;D:\libraries\SDL_image-1.2.12\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/im.azriel.desktop.graphics/src/main/cpp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/main/cpp}&quot;"/>
