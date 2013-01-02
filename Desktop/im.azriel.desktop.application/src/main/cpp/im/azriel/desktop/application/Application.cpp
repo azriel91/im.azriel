@@ -31,6 +31,7 @@ Application::Application(const int viewportWidth, const int viewportHeight, cons
 }
 
 Application::~Application() {
+	SDL_DestroyMutex(this->drawingLock);
 	delete this->environment;
 }
 
