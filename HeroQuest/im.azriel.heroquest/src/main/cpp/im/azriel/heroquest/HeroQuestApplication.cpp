@@ -42,7 +42,17 @@ void HeroQuestApplication::handleKeyDown(SDL_Event* const event) {
 }
 
 void HeroQuestApplication::handleKeyUp(SDL_Event* const event) {
+	const int keyCode = event->key.keysym.sym;
+	switch (keyCode) {
+		case SDLK_ESCAPE:
+			break;
 
+		case SDLK_LAST:
+			break;
+
+		default:
+			break;
+	}
 }
 
 void HeroQuestApplication::handleMouseEvent(SDL_Event* const event) {
@@ -56,7 +66,6 @@ void HeroQuestApplication::handleUserEvent(SDL_Event* const event) {
 void HeroQuestApplication::redraw() {
 
 }
-
 
 } /* namespace heroquest */
 } /* namespace azriel */
