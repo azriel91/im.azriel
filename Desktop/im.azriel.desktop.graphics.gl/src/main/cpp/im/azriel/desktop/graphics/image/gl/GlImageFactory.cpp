@@ -118,7 +118,7 @@ const GLuint GlImageFactory::createTexture(const SDL_Surface* const sSheet) {
 	const int bitsPerPx = sSheet->format->BitsPerPixel;
 	const SDL_PixelFormat* const fmt = sSheet->format;
 
-	GLubyte* texels;
+	GLubyte* texels = nullptr;
 	switch (bitsPerPx) {
 		case 8: {
 			const Uint8* const source8 = static_cast<Uint8*>(sSheet->pixels);
@@ -135,7 +135,9 @@ const GLuint GlImageFactory::createTexture(const SDL_Surface* const sSheet) {
 			break;
 	}
 
-	delete texels;
+	if (texels != nullptr) {
+		delete texels;
+	}
 
 	return texture;
 }
