@@ -1,0 +1,142 @@
+<project name="Common" default="build" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:antc="antlib:net.sf.antcontrib">
+
+	<property name="project.dir" value="${basedir}"/>
+	<basename property="project.name" file="${basedir}"/>
+
+	<property name="source.dir" value="${project.dir}/src/main/cpp"/>
+	<property name="lib.bin.dir" value="${project.dir}/lib/bin"/>
+	<property name="lib.include.dir" value="${project.dir}/lib/include"/>
+	<property name="artifact.bin.dir" value="${project.dir}/artifacts/bin"/>
+	<property name="artifact.include.dir" value="${project.dir}/artifacts/include"/>
+
+	<target name="build" description="Builds all the components in this project.">
+		<runTargetForEachSubDir base.dir="." target.name="build.project" />
+	</target>
+
+	<target name="clean.project">
+		<echo>project name: ${project.name}</echo>
+
+		<echo>deleting project artifacts</echo>
+		<delete dir="${artifact.bin.dir}"/>
+		<delete dir="${artifact.include.dir}"/>
+	</target>
+
+	<target name="build.project" depends="clean.project">
+		<echo>project name: ${project.name}</echo>
+
+		<!-- create build.properties if it doesn't already exist -->
+		<available file="build.properties" property="build.properties.exists"/>
+		<antc:if>
+			<equals arg1="build.properties.exists" arg2="true"/>
+			<then>
+				<!-- <antcall target="build.project.artifacts"/> -->
+			</then>
+			<else>
+				<echo>build.properties doesn't exist</echo>
+			</else>
+		</antc:if>
+		
+		<!-- TODO: load project properties -->
+
+		<!-- extract interfaces -->
+		<echo message="extracting interfaces"/>
+		<copy todir="${artifact.include.dir}">
+			<fileset dir="${source.dir}">
+				<include name="**/*.h"/>
+				<exclude name="**/*.cpp"/>
+			</fileset>
+		</copy>
+
+		<!-- copy dependent interfaces -->
+		<available file="${lib.include.dir}" type="dir" property="lib.include.dir.exists"/>
+		<antc:if>
+			<equals arg1="${lib.include.dir.exists}" arg2="true"/>
+			<then>
+				<echo message="copying dependent interfaces"/>
+				<copy todir="${artifact.include.dir}">
+					<fileset dir="${lib.include.dir}">
+						<include name="**/*.h"/>
+						<exclude name="**/*.cpp"/>
+					</fileset>
+				</copy>
+			</then>
+			<else>
+				<echo>lib/include doesn't exist</echo>
+			</else>
+		</antc:if>
+
+	</target>
+
+	<target name="build.project.artifacts">
+		<echo>not implemented</echo>
+		<!-- <loadproperties srcFile="build.properties" prefix="${project.dir}"/>
+		<antc:propertycopy name="artifact.ext" from="${project.dir}.artifact.extension"/>
+		<antc:propertycopy name="dependencies" from="${project.dir}.component.dependencies"/> -->
+	</target>
+
+	<target name="generate.build.properties">
+		<echo file="${project.dir}/build.properties">#
+# The extension of the artifact to be generated from building this project. 
+# An empty artifact extension is taken to mean that no artifact will be generated.
+# e.g.	exe	- executable
+#		a	- static library
+#		dll	- dynamic library
+#
+artifact.extension=
+
+#
+# A comma separated list of other projects within this component that this project depends on.
+# e.g. im.azriel.common.imports, im.azriel.common.logger
+#
+component.dependencies=
+#
+# Other directories to include to when building the project
+#
+build.include.dirs=
+
+#
+# Preprocessor symbols. Leave the value blank if the symbol is not valued.
+#
+# Properties should be declared in the format:
+# 	preprocessor.&lt;buildconfiguration&gt;.SYMBOL_NAME=&lt;value&gt;
+# 
+# e.g. preprocessor.debug.ENABLE_LOGGING=
+#
+preprocessor.debug.ENABLE_LOGGING=
+
+#
+# Linked libraries
+#
+# Windows:
+# 	SDL, SDL_Image, opengl32, m
+#
+# Linux:
+# 	SDL, SDL_Image, GL, m
+linker.libraries=
+linker.include.dirs=</echo>
+	</target>
+
+	<macrodef name="runTargetForEachSubDir">
+		<attribute name="base.dir" />
+		<attribute name="target.name" />
+
+		<sequential>
+			<antc:for param="sub.dir">
+
+				<!-- for each sub directory -->
+				<dirset dir="@{base.dir}">
+					<include name="*"/>
+					<exclude name="docs"/>
+					<exclude name="artifacts"/>
+				</dirset>
+
+				<sequential>
+					<ant antfile="../build.xml" dir="@{sub.dir}" target="@{target.name}" inheritAll="false">
+						<property name="project.dir" value="@{sub.dir}"/>
+					</ant>
+				</sequential>
+			</antc:for>
+		</sequential>
+	</macrodef>
+
+</project>
