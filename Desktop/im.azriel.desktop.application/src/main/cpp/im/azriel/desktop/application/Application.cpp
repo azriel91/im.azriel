@@ -16,6 +16,11 @@ namespace application {
 Logger* const Application::LOGGER = Logger::getLogger("Application::LOGGER");
 #endif
 
+SDL_cond* Application::syncCallbackCondition = SDL_CreateCond();
+SDL_mutex* Application::syncCallbackLock = SDL_CreateMutex();
+SDL_mutex* Application::syncCallbackRunnableLock = SDL_CreateMutex();
+int Application::syncCallbackExitCode = 0;
+
 Application::Application(const int viewportWidth, const int viewportHeight) :
 				drawingLock(SDL_CreateMutex()),
 				screen(initVideo(viewportWidth, viewportHeight, false)),
@@ -65,7 +70,19 @@ void Application::mainLoop() {
 			break;
 
 		case SDL_USEREVENT:
-			handleUserEvent(&event);
+			if (event.user.code == Application::SYNCHRONOUS_CALLBACK) {
+
+				// run the runnable since we are the main thread
+				SDL_mutexP(Application::syncCallbackRunnableLock);
+
+				Runnable* const runnable = reinterpret_cast<Runnable*>(event.user.data1);
+				Application::syncCallbackExitCode = runnable->run();
+
+				SDL_mutexV(Application::syncCallbackRunnableLock);
+				SDL_CondSignal(Application::syncCallbackCondition);
+			} else {
+				handleUserEvent(&event);
+			}
 			break;
 
 		case SDL_VIDEOEXPOSE:
@@ -163,6 +180,31 @@ SDL_Surface* Application::initVideo(const int viewportWidth, const int viewportH
 void Application::quit(const int exitCode) {
 	SDL_Quit();
 	exit(exitCode);
+}
+
+int Application::runInMainThread(Runnable* const runnable) {
+
+	int exitCode = 0;
+
+	// only allow one runnable to be scheduled at a time
+	SDL_mutexP(syncCallbackLock);
+
+	SDL_mutexP(syncCallbackRunnableLock);
+	SDL_Event syncCallbackEvent;
+	syncCallbackEvent.type = SDL_USEREVENT;
+	syncCallbackEvent.user.code = Application::SYNCHRONOUS_CALLBACK;
+	syncCallbackEvent.user.data1 = runnable;
+	SDL_PushEvent(&syncCallbackEvent);
+
+	// wait for the main thread to execute the runnable
+	SDL_CondWait(syncCallbackCondition, syncCallbackLock);
+
+	exitCode = syncCallbackExitCode;
+
+	SDL_mutexV(syncCallbackRunnableLock);
+	SDL_mutexV(syncCallbackLock);
+
+	return exitCode;
 }
 
 } /* namespace application */
