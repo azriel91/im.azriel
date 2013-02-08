@@ -2,7 +2,7 @@
  * Application.h
  *
  *  Created on: 4/11/2012
- *      Author: azriel
+ *      Author: Azriel
  */
 
 #ifndef __IM_AZRIEL_DESKTOP_APPLICATION__APPLICATION_H_
@@ -11,10 +11,12 @@
 #include "im/azriel/common/imports/GlImports.h"
 #include "im/azriel/common/imports/SdlImports.h"
 #include "im/azriel/common/logger/Logger.h"
+#include "im/azriel/common/threading/Runnable.h"
 #include "im/azriel/desktop/application/environment/Environment.h"
 
-using namespace im::azriel::desktop::application::environment;
 using namespace im::azriel::common::logger;
+using namespace im::azriel::common::threading;
+using namespace im::azriel::desktop::application::environment;
 
 namespace im {
 namespace azriel {
@@ -22,6 +24,29 @@ namespace desktop {
 namespace application {
 
 class Application {
+private:
+	/**
+	 * Constant indicating a user event is for a synchronous callback
+	 */
+	static constexpr int SYNCHRONOUS_CALLBACK = 1;
+
+	/**
+	 * Condition that the calling thread waits on before returning.
+	 */
+	static SDL_cond* syncCallbackCondition;
+	/**
+	 * Lock to allow only one sync callback to run at a time.
+	 */
+	static SDL_mutex* syncCallbackLock;
+	/**
+	 * Lock between the main thread and calling thread.
+	 */
+	static SDL_mutex* syncCallbackRunnableLock;
+	/**
+	 * Shared location to return the exit code for the last sync callback.
+	 */
+	static int syncCallbackExitCode;
+
 protected:
 	/**
 	 * Mutex for drawing.
@@ -125,6 +150,16 @@ protected:
 	 * @param exitCode
 	 */
 	void quit(const int exitCode);
+
+public:
+	/**
+	 * Runs the specified runnable in the main thread.
+	 *
+	 * @param runnable the runnable to run
+	 *
+	 * @return the exit code returned by the runnable
+	 */
+	static int runInMainThread(Runnable* const runnable);
 };
 
 } /* namespace application */

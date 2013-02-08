@@ -8,17 +8,17 @@
 #ifndef __IM_AZRIEL_HEROQUEST__APPLICATION_H_
 #define __IM_AZRIEL_HEROQUEST__APPLICATION_H_
 
-#include <list>
-#include <vector>
 #include <stack>
 
 #include "im/azriel/common/logger/Logger.h"
 #include "im/azriel/desktop/application/Application.h"
+#include "im/azriel/heroquest/activity/Activity.hpp"
 
 using namespace std;
 
-using namespace im::azriel::desktop::application;
 using namespace im::azriel::common::logger;
+using namespace im::azriel::desktop::application;
+using namespace im::azriel::heroquest::activity;
 
 namespace im {
 namespace azriel {
@@ -33,6 +33,10 @@ private:
 	static Logger* const LOGGER;
 #endif
 
+protected:
+	stack<Activity<>*>* const activityStack;
+	Activity<>* currentActivity;
+
 public:
 	/**
 	 * Start the hero quest application specifying the dimensions of the viewport.
@@ -44,6 +48,7 @@ public:
 	virtual ~HeroQuestApplication();
 
 protected:
+	void handleActivityChange();
 	/**
 	 * Hook method for subclasses to handle key down events
 	 * 
