@@ -43,31 +43,39 @@ public:
 	 * @param image the image to paint
 	 * @param x the x coordinate to paint the image
 	 * @param y the y coordinate to paint the image
+	 * @param r the red value to modify the image by (0-255)
+	 * @param g the green value to modify the image by (0-255)
+	 * @param b the blue value to modify the image by (0-255)
 	 * @param a the alpha value to modify the image by (0-255)
 	 */
-	virtual void paint(const Image* const image, const int x, const int y, const int a) const = 0;
+	virtual void paint(const Image* const image, const int x, const int y, const int r, const int g, const int b,
+	        const int a) const = 0;
 	/**
 	 * Paint an image.
 	 *
 	 * @param image the image to paint
 	 * @param x the x coordinate to paint the image
 	 * @param y the y coordinate to paint the image
-	 * @param a the alpha value to modify the image by (0-255)
 	 * @param flipHorizontal flip the image horizontally
+	 * @param flipVertical flip the image vertically
 	 */
-	virtual void paint(const Image* const image, const int x, const int y, const int a, const bool flipHorizontal) const = 0;
+	virtual void paint(const Image* const image, const int x, const int y, const bool flipHorizontal,
+	        const bool flipVertical) const = 0;
 	/**
 	 * Paint an image.
 	 *
 	 * @param image the image to paint
 	 * @param x the x coordinate to paint the image
 	 * @param y the y coordinate to paint the image
+	 * @param r the red value to modify the image by (0-255)
+	 * @param g the green value to modify the image by (0-255)
+	 * @param b the blue value to modify the image by (0-255)
 	 * @param a the alpha value to modify the image by (0-255)
 	 * @param flipHorizontal flip the image horizontally
 	 * @param flipVertical flip the image vertically
 	 */
-	virtual void paint(const Image* const image, const int x, const int y, const int a, const bool flipHorizontal,
-			const bool flipVertical) const = 0;
+	virtual void paint(const Image* const image, const int x, const int y, const int r, const int g, const int b,
+	        const int a, const bool flipHorizontal, const bool flipVertical) const = 0;
 	/**
 	 * Paint an image from an image sheet.
 	 *
@@ -84,9 +92,13 @@ public:
 	 * @param n the number of the image on the image sheet to paint
 	 * @param x the x coordinate to paint the image
 	 * @param y the y coordinate to paint the image
+	 * @param r the red value to modify the image by (0-255)
+	 * @param g the green value to modify the image by (0-255)
+	 * @param b the blue value to modify the image by (0-255)
 	 * @param a the alpha value to modify the image by (0-255)
 	 */
-	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int a) const = 0;
+	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
+	        const int g, const int b, const int a) const = 0;
 	/**
 	 * Paint an image from an image sheet.
 	 *
@@ -94,11 +106,11 @@ public:
 	 * @param n the number of the image on the image sheet to paint
 	 * @param x the x coordinate to paint the image
 	 * @param y the y coordinate to paint the image
-	 * @param a the alpha value to modify the image by (0-255)
 	 * @param flipHorizontal flip the image horizontally
+	 * @param flipVertical flip the image vertically
 	 */
-	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int a,
-			const bool flipHorizontal) const = 0;
+	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y,
+	        const bool flipHorizontal, const bool flipVertical) const = 0;
 	/**
 	 * Paint an image from an image sheet.
 	 *
@@ -106,12 +118,15 @@ public:
 	 * @param n the number of the image on the image sheet to paint
 	 * @param x the x coordinate to paint the image
 	 * @param y the y coordinate to paint the image
+	 * @param r the red value to modify the image by (0-255)
+	 * @param g the green value to modify the image by (0-255)
+	 * @param b the blue value to modify the image by (0-255)
 	 * @param a the alpha value to modify the image by (0-255)
 	 * @param flipHorizontal flip the image horizontally
 	 * @param flipVertical flip the image vertically
 	 */
-	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int a,
-			const bool flipHorizontal, const bool flipVertical) const = 0;
+	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
+	        const int g, const int b, const int a, const bool flipHorizontal, const bool flipVertical) const = 0;
 	/**
 	 * Paint a line.
 	 *
@@ -124,7 +139,7 @@ public:
 	 * @param b the value for the blue component of the colour (0-255)
 	 */
 	virtual void paintLine(const int x1, const int y1, const int x2, const int y2, const int r, const int g,
-			const int b) const = 0;
+	        const int b) const = 0;
 	/**
 	 * Paint a line.
 	 *
@@ -138,7 +153,7 @@ public:
 	 * @param a the value for the alpha component of the colour (0-255)
 	 */
 	virtual void paintLine(const int x1, const int y1, const int x2, const int y2, const int r, const int g,
-			const int b, const int a) const = 0;
+	        const int b, const int a) const = 0;
 	/**
 	 * Paint a rectangle.
 	 *
@@ -151,7 +166,7 @@ public:
 	 * @param b the value for the blue component of the colour (0-255)
 	 */
 	virtual void paintRect(const int x, const int y, const int w, const int h, const int r, const int g,
-			const int b) const = 0;
+	        const int b) const = 0;
 	/**
 	 * Paint a rectangle.
 	 *
@@ -165,28 +180,30 @@ public:
 	 * @param a the value for the alpha component of the colour (0-255)
 	 */
 	virtual void paintRect(const int x, const int y, const int w, const int h, const int r, const int g, const int b,
-			const int a) const = 0;
+	        const int a) const = 0;
 	/**
 	 * Paint a string.
 	 *
+	 * @param s the string to paint
 	 * @param x the starting x coordinate of the string
 	 * @param y the starting y coordinate of the string
 	 * @param r the value for the red component of the colour (0-255)
 	 * @param g the value for the green component of the colour (0-255)
 	 * @param b the value for the blue component of the colour (0-255)
 	 */
-	virtual void paintString(const char* const s, const double x, const double y) const = 0;
+	virtual void paintString(const string s, const double x, const double y) const = 0;
 	/**
-	 * Paint a string.
+	 * Paint a string, blending it with the specified colour.
 	 *
-	 * @param x the starting x coordinate of the string
+	 * @param s the string to paint
 	 * @param y the starting y coordinate of the string
 	 * @param r the value for the red component of the colour (0-255)
 	 * @param g the value for the green component of the colour (0-255)
 	 * @param b the value for the blue component of the colour (0-255)
 	 * @param a the value for the alpha component of the colour (0-255)
 	 */
-	virtual void paintString(const char* const s, const double x, const double y, const int a) const = 0;
+	virtual void paintString(const string s, const double x, const double y, const int r, const int g, const int b,
+	        const int a) const = 0;
 	/**
 	 * Translate all future operations by the specified coordinates.
 	 *
