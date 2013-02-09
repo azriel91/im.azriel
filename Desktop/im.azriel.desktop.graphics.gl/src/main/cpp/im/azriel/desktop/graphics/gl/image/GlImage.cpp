@@ -5,14 +5,14 @@
  *      Author: azriel
  */
 
-#include "im/azriel/desktop/graphics/image/gl/GlImage.h"
+#include "im/azriel/desktop/graphics/gl/image/GlImage.h"
 
 namespace im {
 namespace azriel {
 namespace desktop {
 namespace graphics {
-namespace image {
 namespace gl {
+namespace image {
 
 GlImage::~GlImage() {
 	glDeleteTextures(1, &(this->textureId));
@@ -48,8 +48,8 @@ GlImage::GlImage(const GLuint textureId, const int width, const int height, cons
 		        textureCoordinateY((double) height / textureHeight) {
 }
 
-} /* namespace gl */
 } /* namespace image */
+} /* namespace gl */
 } /* namespace graphics */
 } /* namespace desktop */
 } /* namespace azriel */

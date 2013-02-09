@@ -5,14 +5,14 @@
  *      Author: Azriel
  */
 
-#include "im/azriel/desktop/graphics/image/gl/GlImageFactory.h"
+#include "im/azriel/desktop/graphics/gl/image/GlImageFactory.h"
 
 namespace im {
 namespace azriel {
 namespace desktop {
 namespace graphics {
-namespace image {
 namespace gl {
+namespace image {
 
 #ifdef ENABLE_LOGGING
 Logger* const GlImageFactory::LOGGER = Logger::getLogger("GlImageFactory::LOGGER");
@@ -235,8 +235,8 @@ const vector<const GlVertexMap*>* GlImageFactory::calculateVertexMaps(const int 
 	return vertexMaps;
 }
 
-} /* namespace gl */
 } /* namespace image */
+} /* namespace gl */
 } /* namespace graphics */
 } /* namespace desktop */
 } /* namespace azriel */

@@ -20,8 +20,8 @@ namespace im {
 namespace azriel {
 namespace desktop {
 namespace graphics {
-namespace image {
 namespace gl {
+namespace image {
 
 class GlImage: public Image {
 	friend class GlImageFactory;
@@ -94,8 +94,8 @@ protected:
 	GlImage(const GLuint textureId, const int width, const int height, const int textureWidth, const int textureHeight);
 };
 
-} /* namespace gl */
 } /* namespace image */
+} /* namespace gl */
 } /* namespace graphics */
 } /* namespace desktop */
 } /* namespace azriel */

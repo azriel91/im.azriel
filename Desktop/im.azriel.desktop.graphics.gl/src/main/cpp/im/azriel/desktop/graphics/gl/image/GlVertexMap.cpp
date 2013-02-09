@@ -5,14 +5,14 @@
  *      Author: azriel
  */
 
-#include "GlVertexMap.h"
+#include "im/azriel/desktop/graphics/gl/image/GlVertexMap.h"
 
 namespace im {
 namespace azriel {
 namespace desktop {
 namespace graphics {
-namespace image {
 namespace gl {
+namespace image {
 
 GlVertexMap::GlVertexMap(const double x1, const double y1, const double x2, const double y2) :
 		x1(x1), y1(y1), x2(x2), y2(y2) {
@@ -37,8 +37,8 @@ const double GlVertexMap::getY2() {
 	return this->y2;
 }
 
-} /* namespace gl */
 } /* namespace image */
+} /* namespace gl */
 } /* namespace graphics */
 } /* namespace desktop */
 } /* namespace azriel */

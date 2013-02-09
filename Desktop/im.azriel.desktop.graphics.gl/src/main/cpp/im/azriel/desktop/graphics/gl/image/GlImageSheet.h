@@ -11,8 +11,8 @@
 #include <vector>
 
 #include "im/azriel/desktop/graphics/image/ImageSheet.h"
-#include "im/azriel/desktop/graphics/image/gl/GlImage.h"
-#include "im/azriel/desktop/graphics/image/gl/GlVertexMap.h"
+#include "im/azriel/desktop/graphics/gl/image/GlImage.h"
+#include "im/azriel/desktop/graphics/gl/image/GlVertexMap.h"
 
 using namespace std;
 using namespace im::azriel::desktop::graphics::image;
@@ -21,8 +21,8 @@ namespace im {
 namespace azriel {
 namespace desktop {
 namespace graphics {
-namespace image {
 namespace gl {
+namespace image {
 
 class GlImageSheet: public ImageSheet, public GlImage {
 	friend class GlImageFactory;
@@ -39,8 +39,8 @@ protected:
 	        const int columnCount, const vector<const GlVertexMap*>* const vertexMaps);
 };
 
-} /* namespace gl */
 } /* namespace image */
+} /* namespace gl */
 } /* namespace graphics */
 } /* namespace desktop */
 } /* namespace azriel */

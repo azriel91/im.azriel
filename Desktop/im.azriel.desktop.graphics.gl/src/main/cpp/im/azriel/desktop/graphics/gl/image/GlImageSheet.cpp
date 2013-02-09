@@ -5,14 +5,14 @@
  *      Author: azriel
  */
 
-#include "GlImageSheet.h"
+#include "im/azriel/desktop/graphics/gl/image/GlImageSheet.h"
 
 namespace im {
 namespace azriel {
 namespace desktop {
 namespace graphics {
-namespace image {
 namespace gl {
+namespace image {
 
 GlImageSheet::GlImageSheet(const GLuint textureId, const int width, const int height, const int textureWidth,
         const int textureHeight, const int subImageWidth, const int subImageHeight, const int rowCount,
@@ -30,8 +30,8 @@ GlImageSheet::~GlImageSheet() {
 	delete this->vertexMaps;
 }
 
-} /* namespace gl */
 } /* namespace image */
+} /* namespace gl */
 } /* namespace graphics */
 } /* namespace desktop */
 } /* namespace azriel */

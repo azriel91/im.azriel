@@ -16,8 +16,9 @@
 #include "im/azriel/common/imports/SdlImports.h"
 #include "im/azriel/common/logger/Logger.h"
 #include "im/azriel/desktop/graphics/image/exception/ImageLoadException.h"
-#include "im/azriel/desktop/graphics/image/gl/GlImage.h"
-#include "im/azriel/desktop/graphics/image/gl/GlImageSheet.h"
+#include "im/azriel/desktop/graphics/gl/image/GlImage.h"
+#include "im/azriel/desktop/graphics/gl/image/GlImageSheet.h"
+#include "im/azriel/desktop/graphics/gl/image/GlVertexMap.h"
 
 using namespace std;
 using namespace im::azriel::common::logger;
@@ -27,8 +28,8 @@ namespace im {
 namespace azriel {
 namespace desktop {
 namespace graphics {
-namespace image {
 namespace gl {
+namespace image {
 
 class GlImageFactory {
 private:
@@ -56,8 +57,8 @@ private:
 	        const int border);
 };
 
-} /* namespace gl */
 } /* namespace image */
+} /* namespace gl */
 } /* namespace graphics */
 } /* namespace desktop */
 } /* namespace azriel */

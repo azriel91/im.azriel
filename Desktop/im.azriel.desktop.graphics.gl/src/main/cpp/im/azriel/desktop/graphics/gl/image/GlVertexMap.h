@@ -12,8 +12,8 @@ namespace im {
 namespace azriel {
 namespace desktop {
 namespace graphics {
-namespace image {
 namespace gl {
+namespace image {
 
 class GlVertexMap {
 protected:
@@ -71,8 +71,8 @@ public:
 	const double getY2();
 };
 
-} /* namespace gl */
 } /* namespace image */
+} /* namespace gl */
 } /* namespace graphics */
 } /* namespace desktop */
 } /* namespace azriel */
