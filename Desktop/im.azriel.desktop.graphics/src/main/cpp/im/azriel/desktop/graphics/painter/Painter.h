@@ -191,7 +191,7 @@ public:
 	 * @param g the value for the green component of the colour (0-255)
 	 * @param b the value for the blue component of the colour (0-255)
 	 */
-	virtual void paintString(const string s, const double x, const double y) const = 0;
+	virtual void paintString(const string s, const int x, const int y) const = 0;
 	/**
 	 * Paint a string, blending it with the specified colour.
 	 *
@@ -202,7 +202,7 @@ public:
 	 * @param b the value for the blue component of the colour (0-255)
 	 * @param a the value for the alpha component of the colour (0-255)
 	 */
-	virtual void paintString(const string s, const double x, const double y, const int r, const int g, const int b,
+	virtual void paintString(const string s, const int x, const int y, const int r, const int g, const int b,
 	        const int a) const = 0;
 	/**
 	 * Translate all future operations by the specified coordinates.
