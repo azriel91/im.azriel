@@ -32,6 +32,8 @@ protected:
 
 public:
 	virtual ~GlImageSheet();
+	const GlVertexMap* operator[](const int index) const;
+	const GlVertexMap* getVertexMap(const int index) const;
 
 protected:
 	GlImageSheet(const GLuint textureId, const int width, const int height, const int textureWidth,

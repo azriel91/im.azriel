@@ -21,19 +21,19 @@ GlVertexMap::GlVertexMap(const double x1, const double y1, const double x2, cons
 GlVertexMap::~GlVertexMap() {
 }
 
-const double GlVertexMap::getX1() {
+const double GlVertexMap::getX1() const {
 	return this->x1;
 }
 
-const double GlVertexMap::getY1() {
+const double GlVertexMap::getY1() const {
 	return this->y1;
 }
 
-const double GlVertexMap::getX2() {
+const double GlVertexMap::getX2() const {
 	return this->x2;
 }
 
-const double GlVertexMap::getY2() {
+const double GlVertexMap::getY2() const {
 	return this->y2;
 }
 

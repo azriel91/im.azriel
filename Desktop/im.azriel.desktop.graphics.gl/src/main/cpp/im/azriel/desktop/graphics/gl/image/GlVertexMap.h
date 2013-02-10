@@ -50,25 +50,25 @@ public:
 	 *
 	 * @return the left x coordinate
 	 */
-	const double getX1();
+	const double getX1() const;
 	/**
 	 * Get the top y coordinate
 	 *
 	 * @return the top y coordinate
 	 */
-	const double getY1();
+	const double getY1() const;
 	/**
 	 * Get the right x coordinate
 	 *
 	 * @return the right x coordinate
 	 */
-	const double getX2();
+	const double getX2() const;
 	/**
 	 * Get the bottom y coordinate
 	 *
 	 * @return the bottom y coordinate
 	 */
-	const double getY2();
+	const double getY2() const;
 };
 
 } /* namespace image */

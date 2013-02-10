@@ -30,6 +30,14 @@ GlImageSheet::~GlImageSheet() {
 	delete this->vertexMaps;
 }
 
+const GlVertexMap* GlImageSheet::operator[](const int index) const {
+	return this->vertexMaps->at(index);
+}
+
+const GlVertexMap* GlImageSheet::getVertexMap(const int index) const {
+	return this->vertexMaps->at(index);
+}
+
 } /* namespace image */
 } /* namespace gl */
 } /* namespace graphics */

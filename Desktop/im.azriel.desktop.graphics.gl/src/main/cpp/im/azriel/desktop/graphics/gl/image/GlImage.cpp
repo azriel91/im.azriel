@@ -18,7 +18,7 @@ GlImage::~GlImage() {
 	glDeleteTextures(1, &(this->textureId));
 }
 
-const GLuint GlImage::getTextureId() {
+const GLuint GlImage::getTextureId() const {
 	return this->textureId;
 }
 

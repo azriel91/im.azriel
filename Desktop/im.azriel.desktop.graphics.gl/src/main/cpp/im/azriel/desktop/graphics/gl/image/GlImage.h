@@ -55,7 +55,7 @@ public:
 	 *
 	 * @return the texture id
 	 */
-	const GLuint getTextureId();
+	const GLuint getTextureId() const;
 	/**
 	 * Get the width of the texture for this GlImage. This will be a power of two.
 	 *
