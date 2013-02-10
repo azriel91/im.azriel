@@ -41,7 +41,7 @@ public:
 	 * @param x the x coordinate to paint the image
 	 * @param y the y coordinate to paint the image
 	 */
-	virtual void paint(const GlImage* const image, const int x, const int y) const;
+	virtual void paint(const Image* const image, const int x, const int y) const;
 	/**
 	 * Paint an image.
 	 *
@@ -53,7 +53,7 @@ public:
 	 * @param b the blue value to modify the image by (0-255)
 	 * @param a the alpha value to modify the image by (0-255)
 	 */
-	virtual void paint(const GlImage* const image, const int x, const int y, const int r, const int g, const int b,
+	virtual void paint(const Image* const image, const int x, const int y, const int r, const int g, const int b,
 	        const int a) const;
 	/**
 	 * Paint an image.
@@ -64,7 +64,7 @@ public:
 	 * @param flipHorizontal flip the image horizontally
 	 * @param flipVertical flip the image vertically
 	 */
-	virtual void paint(const GlImage* const image, const int x, const int y, const bool flipHorizontal,
+	virtual void paint(const Image* const image, const int x, const int y, const bool flipHorizontal,
 	        const bool flipVertical) const;
 	/**
 	 * Paint an image.
@@ -79,7 +79,7 @@ public:
 	 * @param flipHorizontal flip the image horizontally
 	 * @param flipVertical flip the image vertically
 	 */
-	virtual void paint(const GlImage* const image, const int x, const int y, const int r, const int g, const int b,
+	virtual void paint(const Image* const image, const int x, const int y, const int r, const int g, const int b,
 	        const int a, const bool flipHorizontal, const bool flipVertical) const;
 	/**
 	 * Paint an image from an image sheet.
@@ -89,7 +89,7 @@ public:
 	 * @param x the x coordinate to paint the image
 	 * @param y the y coordinate to paint the image
 	 */
-	virtual void paint(const GlImageSheet* const imageSheet, const int n, const int x, const int y) const;
+	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y) const;
 	/**
 	 * Paint an image from an image sheet.
 	 *
@@ -102,7 +102,7 @@ public:
 	 * @param b the blue value to modify the image by (0-255)
 	 * @param a the alpha value to modify the image by (0-255)
 	 */
-	virtual void paint(const GlImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
+	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
 	        const int g, const int b, const int a) const;
 	/**
 	 * Paint an image from an image sheet.
@@ -114,7 +114,7 @@ public:
 	 * @param flipHorizontal flip the image horizontally
 	 * @param flipVertical flip the image vertically
 	 */
-	virtual void paint(const GlImageSheet* const imageSheet, const int n, const int x, const int y,
+	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y,
 	        const bool flipHorizontal, const bool flipVertical) const;
 	/**
 	 * Paint an image from an image sheet.
@@ -130,7 +130,7 @@ public:
 	 * @param flipHorizontal flip the image horizontally
 	 * @param flipVertical flip the image vertically
 	 */
-	virtual void paint(const GlImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
+	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
 	        const int g, const int b, const int a, const bool flipHorizontal, const bool flipVertical) const;
 	/**
 	 * Paint a line.
