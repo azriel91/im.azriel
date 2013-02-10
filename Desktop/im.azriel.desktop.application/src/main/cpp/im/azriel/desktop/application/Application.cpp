@@ -197,7 +197,7 @@ int Application::runInMainThread(Runnable* const runnable) {
 	SDL_PushEvent(&syncCallbackEvent);
 
 	// wait for the main thread to execute the runnable
-	SDL_CondWait(syncCallbackCondition, syncCallbackLock);
+	SDL_CondWait(syncCallbackCondition, syncCallbackRunnableLock);
 
 	exitCode = syncCallbackExitCode;
 
