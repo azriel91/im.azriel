@@ -38,12 +38,12 @@ void GlPainter::paint(const Image* const image, const int x, const int y, const 
 
 void GlPainter::paint(const Image* const image, const int x, const int y, const int r, const int g, const int b,
         const int a, const bool flipHorizontal, const bool flipVertical) const {
-	const GlImage* const glImage = dynamic_cast<const GlImage* const>(image);
-	const int* coordinates = generateCoordinates(x, y, glImage->getTextureWidth(), glImage->getTextureHeight(),
-	        flipHorizontal, flipVertical);
+	const GlImage* const glImage = dynamic_cast<const GlImage* const >(image);
+	const int* coordinates = generateCoordinates(x, y, glImage->getWidth(), glImage->getHeight(), flipHorizontal,
+	        flipVertical);
 
-	internalPaintImage(glImage->getTextureId(), coordinates[0], coordinates[1], coordinates[2], coordinates[3], 0.0, 0.0,
-			glImage->getTextureCoordinateX(), glImage->getTextureCoordinateY(), r, g, b, a);
+	internalPaintImage(glImage->getTextureId(), coordinates[0], coordinates[1], coordinates[2], coordinates[3], 0.0,
+	        0.0, glImage->getTextureCoordinateX(), glImage->getTextureCoordinateY(), r, g, b, a);
 
 	delete[] coordinates;
 }
@@ -65,9 +65,9 @@ void GlPainter::paint(const ImageSheet* const imageSheet, const int n, const int
 void GlPainter::paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
         const int g, const int b, const int a, const bool flipHorizontal, const bool flipVertical) const {
 
-	const GlImageSheet* const glImageSheet = dynamic_cast<const GlImageSheet* const>(imageSheet);
-	const int* coordinates = generateCoordinates(x, y, glImageSheet->getSubImageWidth(), glImageSheet->getSubImageHeight(),
-	        flipHorizontal, flipVertical);
+	const GlImageSheet* const glImageSheet = dynamic_cast<const GlImageSheet* const >(imageSheet);
+	const int* coordinates = generateCoordinates(x, y, glImageSheet->getSubImageWidth(),
+	        glImageSheet->getSubImageHeight(), flipHorizontal, flipVertical);
 
 	const GlVertexMap* const vertexMap = (*glImageSheet)[n];
 	internalPaintImage(glImageSheet->getTextureId(), coordinates[0], coordinates[1], coordinates[2], coordinates[3],
@@ -122,7 +122,7 @@ void GlPainter::internalPaintImage(const GLuint textureId, const int x1, const i
 void GlPainter::internalPaintImage(const GLuint textureId, const int x1, const int y1, const int x2, const int y2,
         const double tx1, const double ty1, const double tx2, const double ty2, const int r, const int g, const int b,
         const int a) const {
-	glColor4b((GLubyte) r, (GLubyte) g, (GLubyte) b, (GLubyte) a);
+	glColor4ub((GLubyte) r, (GLubyte) g, (GLubyte) b, (GLubyte) a);
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 
