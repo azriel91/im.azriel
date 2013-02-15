@@ -133,13 +133,12 @@ public:
 	virtual T* getReturnValue();
 
 	/**
-	 * Function called when this activity is first started. This runs on the main thread. All graphics resources should
-	 * be loaded in this method call.
+	 * Function called when this activity is first started. This runs on the main thread. Resources in this method call
+	 * should be freed in the #finalize() method.
 	 */
 	virtual void initialize();
 	/**
-	 * Function called when this activity is terminated. This runs on the main thread. All graphics resources should be
-	 * freed in this method call.
+	 * Function called when this activity is terminated. This runs on the main thread.
 	 */
 	virtual void finalize();
 protected:
@@ -155,6 +154,12 @@ protected:
 	 * The activity event loop to be implemented by subclasses.
 	 */
 	virtual void activityLoop() = 0;
+
+private:
+	/**
+	 * Pushes a VIDEO_EXPOSE SDL event requesting the screen to be redrawn.
+	 */
+	void requestRedraw();
 };
 
 #ifdef ENABLE_LOGGING
@@ -239,6 +244,7 @@ int Activity<T>::run() {
 		Uint32 startTime = SDL_GetTicks();
 
 		activityLoop();
+		requestRedraw();
 
 		Uint32 elapsedTime = SDL_GetTicks() - startTime;
 		SDL_Delay(max((Uint32) 0, this->delay - elapsedTime));
@@ -274,6 +280,8 @@ void Activity<T>::stop() {
 	this->running = false;
 	if (this->thread != nullptr) {
 		this->thread->join();
+		delete this->thread;
+		this->thread = nullptr;
 	}
 }
 
@@ -306,6 +314,13 @@ void Activity<T>::preHook() {
 
 template<class T>
 void Activity<T>::postHook() {
+}
+
+template <class T>
+void Activity<T>::requestRedraw() {
+	SDL_Event event;
+	event.type = SDL_VIDEOEXPOSE;
+	SDL_PushEvent(&event);
 }
 
 } /* namespace activity */

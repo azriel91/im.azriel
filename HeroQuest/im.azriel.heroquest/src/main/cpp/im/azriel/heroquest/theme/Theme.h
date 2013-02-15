@@ -21,6 +21,9 @@ namespace theme {
 class Theme {
 public:
 
+	static constexpr int TEXT_WIDTH = 10;
+	static constexpr int TEXT_HEIGHT = 9;
+
 	/**
 	 * Constants that for each image
 	 */

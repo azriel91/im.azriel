@@ -2,7 +2,7 @@
  * Image.h
  *
  *  Created on: 25/11/2012
- *      Author: azriel
+ *      Author: Azriel
  */
 
 #ifndef __IM_AZRIEL_DESKTOP_GRAPHICS_IMAGE__IMAGE_H_

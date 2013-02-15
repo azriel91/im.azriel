@@ -16,19 +16,35 @@ Logger* const HeroQuestApplication::LOGGER = Logger::getLogger("HeroQuestApplica
 #endif
 
 HeroQuestApplication::HeroQuestApplication(const int viewportWidth, const int viewportHeight) :
-		Application(viewportWidth, viewportHeight), activityStack(new stack<Activity<>*>()), currentActivity(nullptr) {
-
+		        Application(viewportWidth, viewportHeight),
+		        theme(new Theme()),
+		        environment(initEnvironment(viewportWidth, viewportHeight, theme)),
+		        painter(
+		                new GlPainter(this->theme->getPathForImage(Theme::Image::TEXT), Theme::TEXT_WIDTH,
+		                        Theme::TEXT_HEIGHT)),
+		        activityStack(new stack<Activity<>*>()),
+		        currentActivity(new StartUpActivity(this->environment, this->painter)) {
 }
 
 HeroQuestApplication::~HeroQuestApplication() {
 	delete this->activityStack;
+	delete this->theme;
+	delete this->environment;
+}
+
+void HeroQuestApplication::start() {
+	this->currentActivity->initialize();
+	this->currentActivity->start();
 }
 
 void HeroQuestApplication::handleActivityChange() {
 	if (this->currentActivity == nullptr) {
 		if (this->activityStack->empty()) {
-			// TODO: exit application?
 			this->currentActivity = nullptr;
+
+			// no activities left on stack, exit the application
+			quit(0);
+
 		} else {
 			this->currentActivity = this->activityStack->top();
 			this->activityStack->pop();
@@ -46,17 +62,20 @@ void HeroQuestApplication::handleActivityChange() {
 			        typeid(*this->currentActivity).name(), exitCode);
 #endif
 			this->currentActivity->stop();
-//		unregisterListener(this->currentActivity);
+//			unregisterListener(this->currentActivity);
 			this->currentActivity->finalize();
 			delete this->currentActivity;
 
 			if (this->activityStack->empty()) {
-				// TODO: exit application?
 				this->currentActivity = nullptr;
+
+				// no activities left on stack, exit the application
+				quit(0);
+
 			} else {
 				this->currentActivity = this->activityStack->top();
 				this->activityStack->pop();
-//			registerListener(this->currentActivity);
+//				registerListener(this->currentActivity);
 				this->currentActivity->start();
 			}
 			break;
@@ -66,7 +85,7 @@ void HeroQuestApplication::handleActivityChange() {
 			HeroQuestApplication::LOGGER->error("Activity %s returned with exit code: %d.",
 			        typeid(*this->currentActivity).name(), exitCode);
 #endif
-//		unregisterListener(this->currentActivity);
+//			unregisterListener(this->currentActivity);
 			this->currentActivity->finalize();
 			delete this->currentActivity;
 			if (activityStack->empty()) {
@@ -75,7 +94,7 @@ void HeroQuestApplication::handleActivityChange() {
 			} else {
 				this->currentActivity = this->activityStack->top();
 				this->activityStack->pop();
-//			registerListener(this->currentActivity);
+//				registerListener(this->currentActivity);
 				this->currentActivity->start();
 			}
 			break;
@@ -86,12 +105,12 @@ void HeroQuestApplication::handleActivityChange() {
 			        typeid(*this->currentActivity).name(), exitCode);
 #endif
 			this->currentActivity->stop();
-//		unregisterListener(this->currentActivity);
+//			unregisterListener(this->currentActivity);
 			this->activityStack->push(this->currentActivity);
 			Activity<>* stackActivity = this->currentActivity->getStackActivity();
 			this->currentActivity = stackActivity;
 			stackActivity->initialize();
-//		registerListener(this->currentActivity);
+//			registerListener(this->currentActivity);
 			stackActivity->start();
 		}
 			break;
@@ -144,8 +163,17 @@ void HeroQuestApplication::handleUserEvent(SDL_Event* const event) {
 	}
 }
 
-void HeroQuestApplication::redraw() {
+const im::azriel::heroquest::environment::Environment* HeroQuestApplication::initEnvironment(const int viewportWidth,
+        const int viewportHeight, const Theme* const theme) {
+	const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo();
+	const im::azriel::heroquest::environment::Environment* environment =
+	        new im::azriel::heroquest::environment::Environment(viewportWidth, viewportHeight, videoInfo->current_w,
+	                videoInfo->current_h, theme);
+	return environment;
+}
 
+void HeroQuestApplication::redraw() {
+	this->currentActivity->redraw();
 }
 
 } /* namespace heroquest */

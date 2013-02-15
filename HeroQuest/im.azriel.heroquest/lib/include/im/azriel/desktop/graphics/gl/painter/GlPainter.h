@@ -1,33 +1,38 @@
 /*
- * Painter.h
+ * GlPainter.h
  *
- *  Created on: 5/11/2012
+ *  Created on: 9/02/2013
  *      Author: azriel
  */
 
-#ifndef __IM_AZRIEL_DESKTOP_GRAPHICS_PAINTER__PAINTER_H_
-#define __IM_AZRIEL_DESKTOP_GRAPHICS_PAINTER__PAINTER_H_
+#ifndef GLPAINTER_H_
+#define GLPAINTER_H_
 
 #include <string>
-#include <vector>
 
-#include "im/azriel/desktop/graphics/image/Image.h"
-#include "im/azriel/desktop/graphics/image/ImageSheet.h"
+#include "im/azriel/desktop/graphics/painter/Painter.h"
+#include "im/azriel/desktop/graphics/gl/image/GlImage.h"
+#include "im/azriel/desktop/graphics/gl/image/GlImageFactory.h"
+#include "im/azriel/desktop/graphics/gl/image/GlImageSheet.h"
 
 using namespace std;
-
-using namespace im::azriel::desktop::graphics::image;
+using namespace im::azriel::desktop::graphics::gl::image;
+using namespace im::azriel::desktop::graphics::painter;
 
 namespace im {
 namespace azriel {
 namespace desktop {
 namespace graphics {
+namespace gl {
 namespace painter {
 
-class Painter {
+class GlPainter: public Painter {
+protected:
+	const GlImageSheet* const textImageSheet;
+
 public:
-	Painter();
-	virtual ~Painter();
+	GlPainter(const string textImageSheetPath, const int charWidth, const int charHeight);
+	virtual ~GlPainter();
 
 	/**
 	 * Paint an image.
@@ -36,7 +41,7 @@ public:
 	 * @param x the x coordinate to paint the image
 	 * @param y the y coordinate to paint the image
 	 */
-	virtual void paint(const Image* const image, const int x, const int y) const = 0;
+	virtual void paint(const Image* const image, const int x, const int y) const;
 	/**
 	 * Paint an image.
 	 *
@@ -49,7 +54,7 @@ public:
 	 * @param a the alpha value to modify the image by (0-255)
 	 */
 	virtual void paint(const Image* const image, const int x, const int y, const int r, const int g, const int b,
-	        const int a) const = 0;
+	        const int a) const;
 	/**
 	 * Paint an image.
 	 *
@@ -60,7 +65,7 @@ public:
 	 * @param flipVertical flip the image vertically
 	 */
 	virtual void paint(const Image* const image, const int x, const int y, const bool flipHorizontal,
-	        const bool flipVertical) const = 0;
+	        const bool flipVertical) const;
 	/**
 	 * Paint an image.
 	 *
@@ -75,7 +80,7 @@ public:
 	 * @param flipVertical flip the image vertically
 	 */
 	virtual void paint(const Image* const image, const int x, const int y, const int r, const int g, const int b,
-	        const int a, const bool flipHorizontal, const bool flipVertical) const = 0;
+	        const int a, const bool flipHorizontal, const bool flipVertical) const;
 	/**
 	 * Paint an image from an image sheet.
 	 *
@@ -84,7 +89,7 @@ public:
 	 * @param x the x coordinate to paint the image
 	 * @param y the y coordinate to paint the image
 	 */
-	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y) const = 0;
+	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y) const;
 	/**
 	 * Paint an image from an image sheet.
 	 *
@@ -98,7 +103,7 @@ public:
 	 * @param a the alpha value to modify the image by (0-255)
 	 */
 	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
-	        const int g, const int b, const int a) const = 0;
+	        const int g, const int b, const int a) const;
 	/**
 	 * Paint an image from an image sheet.
 	 *
@@ -110,7 +115,7 @@ public:
 	 * @param flipVertical flip the image vertically
 	 */
 	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y,
-	        const bool flipHorizontal, const bool flipVertical) const = 0;
+	        const bool flipHorizontal, const bool flipVertical) const;
 	/**
 	 * Paint an image from an image sheet.
 	 *
@@ -126,7 +131,7 @@ public:
 	 * @param flipVertical flip the image vertically
 	 */
 	virtual void paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
-	        const int g, const int b, const int a, const bool flipHorizontal, const bool flipVertical) const = 0;
+	        const int g, const int b, const int a, const bool flipHorizontal, const bool flipVertical) const;
 	/**
 	 * Paint a line.
 	 *
@@ -139,7 +144,7 @@ public:
 	 * @param b the value for the blue component of the colour (0-255)
 	 */
 	virtual void paintLine(const int x1, const int y1, const int x2, const int y2, const int r, const int g,
-	        const int b) const = 0;
+	        const int b) const;
 	/**
 	 * Paint a line.
 	 *
@@ -153,7 +158,7 @@ public:
 	 * @param a the value for the alpha component of the colour (0-255)
 	 */
 	virtual void paintLine(const int x1, const int y1, const int x2, const int y2, const int r, const int g,
-	        const int b, const int a) const = 0;
+	        const int b, const int a) const;
 	/**
 	 * Paint a rectangle.
 	 *
@@ -166,7 +171,7 @@ public:
 	 * @param b the value for the blue component of the colour (0-255)
 	 */
 	virtual void paintRect(const int x, const int y, const int w, const int h, const int r, const int g,
-	        const int b) const = 0;
+	        const int b) const;
 	/**
 	 * Paint a rectangle.
 	 *
@@ -180,7 +185,7 @@ public:
 	 * @param a the value for the alpha component of the colour (0-255)
 	 */
 	virtual void paintRect(const int x, const int y, const int w, const int h, const int r, const int g, const int b,
-	        const int a) const = 0;
+	        const int a) const;
 	/**
 	 * Paint a string.
 	 *
@@ -191,11 +196,12 @@ public:
 	 * @param g the value for the green component of the colour (0-255)
 	 * @param b the value for the blue component of the colour (0-255)
 	 */
-	virtual void paintString(const string s, const int x, const int y) const = 0;
+	virtual void paintString(const string s, const int x, const int y) const;
 	/**
 	 * Paint a string, blending it with the specified colour.
 	 *
 	 * @param s the string to paint
+	 * @param x the starting x coordinate of the string
 	 * @param y the starting y coordinate of the string
 	 * @param r the value for the red component of the colour (0-255)
 	 * @param g the value for the green component of the colour (0-255)
@@ -203,19 +209,86 @@ public:
 	 * @param a the value for the alpha component of the colour (0-255)
 	 */
 	virtual void paintString(const string s, const int x, const int y, const int r, const int g, const int b,
-	        const int a) const = 0;
+	        const int a) const;
 	/**
 	 * Translate all future operations by the specified coordinates.
 	 *
 	 * @param x the number of units to translate future operations by along the x axis
 	 * @param y the number of units to translate future operations by along the y axis
 	 */
-	virtual void translate(const int x, const int y) const = 0;
+	virtual void translate(const int x, const int y) const;
+
+protected:
+
+	/**
+	 * Paint a texture at the specified coordinates.
+	 *
+	 * @param textureId the texture id
+	 * @param x1 the starting x coordinate of where the texture should be drawn
+	 * @param y1 the starting y coordinate of where the texture should be drawn
+	 * @param x2 the ending x coordinate of where the texture should be drawn
+	 * @param y2 the ending y coordinate of where the texture should be drawn
+	 * @param tx1 the starting texture x coordinate
+	 * @param ty1 the starting texture y coordinate
+	 * @param tx2 the ending texture x coordinate
+	 * @param ty2 the ending texture y coordinate
+	 */
+	void internalPaintImage(const GLuint textureId, const int x1, const int y1, const int x2, const int y2,
+	        const double tx1, const double ty1, const double tx2, const double ty2) const;
+	/**
+	 * Paint a texture at the specified coordinates.
+	 *
+	 * @param textureId the texture id
+	 * @param x1 the starting x coordinate of where the texture should be drawn
+	 * @param y1 the starting y coordinate of where the texture should be drawn
+	 * @param x2 the ending x coordinate of where the texture should be drawn
+	 * @param y2 the ending y coordinate of where the texture should be drawn
+	 * @param tx1 the starting texture x coordinate
+	 * @param ty1 the starting texture y coordinate
+	 * @param tx2 the ending texture x coordinate
+	 * @param ty2 the ending texture y coordinate
+	 * @param r the alpha value to modify the image by (0-255)
+	 * @param g the alpha value to modify the image by (0-255)
+	 * @param b the alpha value to modify the image by (0-255)
+	 * @param a the alpha value to modify the image by (0-255)
+	 */
+	void internalPaintImage(const GLuint textureId, const int x1, const int y1, const int x2, const int y2,
+	        const double tx1, const double ty1, const double tx2, const double ty2, const int r, const int g,
+	        const int b, const int a) const;
+	/**
+	 * Paint a string at the specified location, using the images on the passed in image sheet.
+	 *
+	 * @param textImageSheet the image sheet from which to source the text image
+	 * @param s the string to paint
+	 * @param x the x coordinate to paint the image
+	 * @param y the y coordinate to paint the image
+	 * @param r the red value to modify the image by (0-255)
+	 * @param g the green value to modify the image by (0-255)
+	 * @param b the blue value to modify the image by (0-255)
+	 * @param a the alpha value to modify the image by (0-255)
+	 */
+	void internalPaintString(const GlImageSheet* const textImageSheet, const string s, const int x, const int y,
+	        const int r, const int g, const int b, const int a) const;
+	/**
+	 * Generates an array of int coordinates such that coordinates[0~3] correspond to the following positions if not
+	 * flipped:
+	 * <pre>
+	 * x, y		x+w, y
+	 *
+	 * x, y+h	x+w, y+h
+	 * </pre>
+	 * The caller is responsible for freeing memory with a <code>delete[] array</code> call.
+	 *
+	 * @return the generated array
+	 */
+	static const int* generateCoordinates(const int x, const int y, const int w, const int h, const bool flipHorizontal,
+	        const bool flipVertical);
 };
 
 } /* namespace painter */
+} /* namespace gl */
 } /* namespace graphics */
 } /* namespace desktop */
 } /* namespace azriel */
 } /* namespace im */
-#endif /* __IM_AZRIEL_DESKTOP_GRAPHICS_PAINTER__PAINTER_H_ */
+#endif /* GLPAINTER_H_ */

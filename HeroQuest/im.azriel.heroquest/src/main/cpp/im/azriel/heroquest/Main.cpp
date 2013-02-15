@@ -16,6 +16,7 @@ int main(int argc, char **argv) {
 #endif
 
 	HeroQuestApplication* const app = new HeroQuestApplication(1024, 768);
+	app->start();
 	app->mainLoop();
 
 	return 0;

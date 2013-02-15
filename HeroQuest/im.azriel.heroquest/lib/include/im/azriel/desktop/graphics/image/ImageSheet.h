@@ -19,37 +19,41 @@ namespace image {
 class ImageSheet: public Image {
 protected:
 	/**
-	 * The width of each individual sub-image in this image sheet.
+	 * The number of pixels between each sub image in this image sheet.
 	 */
-	const int subImageWidth;
+	const int border;
 	/**
-	 * The height of each individual sub-image in this image sheet.
+	 * The number of columns of sub-images in this image sheet.
 	 */
-	const int subImageHeight;
+	const int columnCount;
 	/**
 	 * The number of rows of sub-images in this image sheet.
 	 */
 	const int rowCount;
 	/**
-	 * The number of columns of sub-images in this image sheet.
+	 * The height of each individual sub-image in this image sheet.
 	 */
-	const int columnCount;
+	const int subImageHeight;
+	/**
+	 * The width of each individual sub-image in this image sheet.
+	 */
+	const int subImageWidth;
 
 public:
 	virtual ~ImageSheet();
 
 	/**
-	 * Get the width of each individual sub-image in this image sheet.
+	 * Get the number of pixels between each sub image in this image sheet.
 	 *
-	 * @return the width of a sub-image in pixels
+	 * @return the border width
 	 */
-	const int getSubImageWidth() const;
+	const int getBorder() const;
 	/**
-	 * Get the height of each individual sub-image in this image sheet.
+	 * Get the number of columns of sub-images in this image sheet.
 	 *
-	 * @return the height of a sub-image in pixels
+	 * @return the number of columns
 	 */
-	const int getSubImageHeight() const;
+	const int getColumnCount() const;
 	/**
 	 * Get the number of rows of sub-images in this image sheet.
 	 *
@@ -57,11 +61,17 @@ public:
 	 */
 	const int getRowCount() const;
 	/**
-	 * Get the number of columns of sub-images in this image sheet.
+	 * Get the height of each individual sub-image in this image sheet.
 	 *
-	 * @return the number of columns
+	 * @return the height of a sub-image in pixels
 	 */
-	const int getColumnCount() const;
+	const int getSubImageHeight() const;
+	/**
+	 * Get the width of each individual sub-image in this image sheet.
+	 *
+	 * @return the width of a sub-image in pixels
+	 */
+	const int getSubImageWidth() const;
 
 protected:
 	/**
@@ -74,6 +84,17 @@ protected:
 	 */
 	ImageSheet(const int width, const int height, const int subImageWidth, const int subImageHeight, const int rowCount,
 			const int columnCount);
+	/**
+	 * @param width the width of the entire image sheet
+	 * @param height the height of the entire image sheet
+	 * @param subImageWidth the width of each sub-image in the image sheet
+	 * @param subImageHeight the height of each sub-image in the image sheet
+	 * @param rowCount the number of rows of sub-images in the image sheet.
+	 * @param columnCount the number of columns of sub-images in the image sheet.
+	 * @param border the number of pixels between each sub-image in the image sheet.
+	 */
+	ImageSheet(const int width, const int height, const int subImageWidth, const int subImageHeight, const int rowCount,
+			const int columnCount, const int border);
 };
 
 } /* namespace image */
