@@ -49,17 +49,17 @@ void GlPainter::paint(const Image* const image, const int x, const int y, const 
 }
 
 void GlPainter::paint(const ImageSheet* const imageSheet, const int n, const int x, const int y) const {
-	paint(imageSheet, x, y, 255, 255, 255, 255, false, false);
+	paint(imageSheet, n, x, y, 255, 255, 255, 255, false, false);
 }
 
 void GlPainter::paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
         const int g, const int b, const int a) const {
-	paint(imageSheet, x, y, r, g, b, a, false, false);
+	paint(imageSheet, n, x, y, r, g, b, a, false, false);
 }
 
 void GlPainter::paint(const ImageSheet* const imageSheet, const int n, const int x, const int y,
         const bool flipHorizontal, const bool flipVertical) const {
-	paint(imageSheet, x, y, 255, 255, 255, 255, flipHorizontal, flipVertical);
+	paint(imageSheet, n, x, y, 255, 255, 255, 255, flipHorizontal, flipVertical);
 }
 
 void GlPainter::paint(const ImageSheet* const imageSheet, const int n, const int x, const int y, const int r,
@@ -163,12 +163,12 @@ void GlPainter::internalPaintString(const GlImageSheet* const textImageSheet, co
 		while (s[i] != '\n' && i < strLength) {
 			int charImageIndex = s[i] - ' '; // offset for blank characters
 			charImageIndex = max(0, charImageIndex);
-			paint((GlImageSheet*) textImageSheet, charImageIndex, xs, y, r, g, b, a);
+			paint((ImageSheet*) textImageSheet, charImageIndex, xs, ys, r, g, b, a);
 			xs += charWidth;
 			i++;
 		}
 		xs = x;
-		ys += charHeight;
+		ys += charHeight * 1.15; // 15% vertical spacing
 	}
 }
 

@@ -223,8 +223,8 @@ const vector<const GlVertexMap*>* GlImageFactory::calculateVertexMaps(const int 
 	for (int i = 0; i < columnCount; ++i) {
 		for (int j = 0; j < rowCount; ++j) {
 
-			double x1 = j * (subImageWidth + border) / textureWidth;
-			double y1 = i * (subImageHeight + border) / textureHeight;
+			double x1 = (double) (j * (subImageWidth + border)) / textureWidth;
+			double y1 = (double) (i * (subImageHeight + border)) / textureHeight;
 			double x2 = ((j + 1.0) * (subImageWidth + border) - border) / textureWidth;
 			double y2 = ((i + 1.0) * (subImageHeight + border) - border) / textureHeight;
 
