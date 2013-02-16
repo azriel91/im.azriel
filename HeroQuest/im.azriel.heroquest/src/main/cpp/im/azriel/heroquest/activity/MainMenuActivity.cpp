@@ -21,6 +21,7 @@ MainMenuActivity::~MainMenuActivity() {
 }
 
 void MainMenuActivity::redraw() {
+	glClear(GL_COLOR_BUFFER_BIT);
 	this->painter->paint(this->startImage, 0, 0);
 }
 

@@ -22,7 +22,7 @@ class Theme {
 public:
 
 	static constexpr int TEXT_WIDTH = 10;
-	static constexpr int TEXT_HEIGHT = 9;
+	static constexpr int TEXT_HEIGHT = 18;
 
 	/**
 	 * Constants that for each image
