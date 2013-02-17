@@ -18,14 +18,30 @@ class ControlKeyInputSource;
 
 class ControlKeyEvent {
 private:
+	/**
+	 * The control key code.
+	 */
 	const int code;
+	/**
+	 * The #ControlKeyInputSource that fired this event.
+	 */
 	const ControlKeyInputSource* const source;
 
 public:
 	ControlKeyEvent(const ControlKeyInputSource* const source, const int code);
 	virtual ~ControlKeyEvent();
 
+	/**
+	 * Get the control key code.
+	 *
+	 * @return the control key code which must be one of the values defined in #ControlKeyCode
+	 */
 	const int getCode() const;
+	/**
+	 * Get the #ControlKeyInputSource that fired this event.
+	 *
+	 * @return the control key input source
+	 */
 	const ControlKeyInputSource* getSource() const;
 };
 

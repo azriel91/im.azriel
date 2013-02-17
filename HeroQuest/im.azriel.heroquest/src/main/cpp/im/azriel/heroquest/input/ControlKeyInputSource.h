@@ -23,14 +23,30 @@ namespace input {
 class ControlKeyInputSource {
 	friend class SynchronizedControlKeyInputSource;
 private:
+	/**
+	 * Lock to prevent listeners from being added/removed simultaneously.
+	 */
 	SDL_mutex* const listenerLock;
+	/**
+	 * The set of listeners that this input source will notify when a control key input event occurs.
+	 */
 	set<ControlKeyListener*>* const listeners;
 
 public:
 	ControlKeyInputSource();
 	virtual ~ControlKeyInputSource();
 
+	/**
+	 * Register a #ControlKeyListener with this input source.
+	 *
+	 * @param listener the listener to register
+	 */
 	void registerControlKeyListener(ControlKeyListener* const listener);
+	/**
+	 * Unregister a #ControlKeyListener from this input source.
+	 *
+	 * @param listener the listener to unregister
+	 */
 	void unregisterControlKeyListener(ControlKeyListener* const listener);
 
 protected:

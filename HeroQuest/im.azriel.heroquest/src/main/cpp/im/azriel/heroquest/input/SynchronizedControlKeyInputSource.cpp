@@ -28,46 +28,6 @@ SynchronizedControlKeyInputSource::~SynchronizedControlKeyInputSource() {
 	delete[] this->currentControlKeysState;
 }
 
-const set<const ControlKeyEvent*>* SynchronizedControlKeyInputSource::getControlKeyPresses() const {
-	SDL_mutexP(this->bufferLock);
-	set<const ControlKeyEvent*>* keyPressEvents = new set<const ControlKeyEvent*>();
-
-	for (int i = 0; i < ControlKeyCode::BUTTON_COUNT; ++i) {
-		if (this->currentControlKeysState[i] && !this->previousControlKeysState[i]) {
-			keyPressEvents->insert(new ControlKeyEvent(this, i));
-		}
-	}
-
-	SDL_mutexV(this->bufferLock);
-	return keyPressEvents;
-}
-
-const set<const ControlKeyEvent*>* SynchronizedControlKeyInputSource::getControlKeyReleases() const {
-	SDL_mutexP(this->bufferLock);
-	set<const ControlKeyEvent*>* keyReleaseEvents = new set<const ControlKeyEvent*>();
-
-	for (int i = 0; i < ControlKeyCode::BUTTON_COUNT; ++i) {
-		if (!this->currentControlKeysState[i] && this->previousControlKeysState[i]) {
-			keyReleaseEvents->insert(new ControlKeyEvent(this, i));
-		}
-	}
-
-	SDL_mutexV(this->bufferLock);
-	return keyReleaseEvents;
-}
-
-void SynchronizedControlKeyInputSource::persistCurrentControlKeyState() {
-	SDL_mutexP(this->bufferLock);
-	memcpy(this->previousControlKeysState, this->currentControlKeysState, sizeof(bool) * ControlKeyCode::BUTTON_COUNT);
-	SDL_mutexV(this->bufferLock);
-}
-
-void SynchronizedControlKeyInputSource::setControlKeyEnabled(const int code, const bool enabled) {
-	SDL_mutexP(this->bufferLock);
-	this->currentControlKeysState[code] = enabled;
-	SDL_mutexV(this->bufferLock);
-}
-
 void SynchronizedControlKeyInputSource::fireEvents() {
 	SDL_mutexP(this->listenerLock);
 	SDL_mutexP(this->bufferLock);
@@ -108,6 +68,46 @@ void SynchronizedControlKeyInputSource::fireEvents() {
 
 	SDL_mutexV(this->bufferLock);
 	SDL_mutexV(this->listenerLock);
+}
+
+void SynchronizedControlKeyInputSource::setControlKeyEnabled(const int code, const bool enabled) {
+	SDL_mutexP(this->bufferLock);
+	this->currentControlKeysState[code] = enabled;
+	SDL_mutexV(this->bufferLock);
+}
+
+const set<const ControlKeyEvent*>* SynchronizedControlKeyInputSource::getControlKeyPresses() const {
+	SDL_mutexP(this->bufferLock);
+	set<const ControlKeyEvent*>* keyPressEvents = new set<const ControlKeyEvent*>();
+
+	for (int i = 0; i < ControlKeyCode::BUTTON_COUNT; ++i) {
+		if (this->currentControlKeysState[i] && !this->previousControlKeysState[i]) {
+			keyPressEvents->insert(new ControlKeyEvent(this, i));
+		}
+	}
+
+	SDL_mutexV(this->bufferLock);
+	return keyPressEvents;
+}
+
+const set<const ControlKeyEvent*>* SynchronizedControlKeyInputSource::getControlKeyReleases() const {
+	SDL_mutexP(this->bufferLock);
+	set<const ControlKeyEvent*>* keyReleaseEvents = new set<const ControlKeyEvent*>();
+
+	for (int i = 0; i < ControlKeyCode::BUTTON_COUNT; ++i) {
+		if (!this->currentControlKeysState[i] && this->previousControlKeysState[i]) {
+			keyReleaseEvents->insert(new ControlKeyEvent(this, i));
+		}
+	}
+
+	SDL_mutexV(this->bufferLock);
+	return keyReleaseEvents;
+}
+
+void SynchronizedControlKeyInputSource::persistCurrentControlKeyState() {
+	SDL_mutexP(this->bufferLock);
+	memcpy(this->previousControlKeysState, this->currentControlKeysState, sizeof(bool) * ControlKeyCode::BUTTON_COUNT);
+	SDL_mutexV(this->bufferLock);
 }
 
 } /* namespace input */

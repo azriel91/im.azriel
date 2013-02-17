@@ -20,7 +20,17 @@ public:
 	ControlKeyListener();
 	virtual ~ControlKeyListener();
 
+	/**
+	 * Signals this listener that a control key has been pressed.
+	 *
+	 * @param event the ControlKeyEvent carrying details of the key press
+	 */
 	virtual void controlKeyPressed(const ControlKeyEvent* const event) = 0;
+	/**
+	 * Signals this listener that a control key has been released.
+	 *
+	 * @param event the ControlKeyEvent carrying details of the key release
+	 */
 	virtual void controlKeyReleased(const ControlKeyEvent* const event) = 0;
 };
 
