@@ -25,6 +25,12 @@ void MainMenuActivity::redraw() {
 	this->painter->paint(this->startImage, 0, 0);
 }
 
+void MainMenuActivity::controlKeyPressed(const ControlKeyEvent* const event) {
+}
+
+void MainMenuActivity::controlKeyReleased(const ControlKeyEvent* const event) {
+}
+
 void MainMenuActivity::preHook() {
 	this->startImage = GlImageFactory::loadImage(
 			        this->environment->getTheme()->getPathForImage(Theme::Image::MAIN_START));

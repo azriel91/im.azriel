@@ -18,12 +18,14 @@
 #include "im/azriel/desktop/application/Application.h"
 #include "im/azriel/desktop/graphics/painter/Painter.h"
 #include "im/azriel/heroquest/environment/Environment.h"
+#include "im/azriel/heroquest/input/ControlKeyListener.h"
 
 using namespace im::azriel::common::logger;
 using namespace im::azriel::common::threading;
 using namespace im::azriel::desktop::application;
 using namespace im::azriel::desktop::graphics::painter;
 using namespace im::azriel::heroquest::environment;
+using namespace im::azriel::heroquest::input;
 
 namespace im {
 namespace azriel {
@@ -31,7 +33,7 @@ namespace heroquest {
 namespace activity {
 
 template<class T = void>
-class Activity: public Runnable {
+class Activity: public Runnable, public ControlKeyListener {
 
 public:
 	/**

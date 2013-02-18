@@ -32,6 +32,18 @@ public:
 	 * Function that requests this Activity to redraw itself. Should only be called by the UI thread.
 	 */
 	void redraw();
+	/**
+	 * Signals this listener that a control key has been pressed.
+	 *
+	 * @param event the ControlKeyEvent carrying details of the key press
+	 */
+	virtual void controlKeyPressed(const ControlKeyEvent* const event);
+	/**
+	 * Signals this listener that a control key has been released.
+	 *
+	 * @param event the ControlKeyEvent carrying details of the key release
+	 */
+	virtual void controlKeyReleased(const ControlKeyEvent* const event);
 
 protected:
 	/**

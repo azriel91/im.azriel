@@ -23,6 +23,12 @@ StartUpActivity::~StartUpActivity() {
 void StartUpActivity::redraw() {
 }
 
+void StartUpActivity::controlKeyPressed(const ControlKeyEvent* const event) {
+}
+
+void StartUpActivity::controlKeyReleased(const ControlKeyEvent* const event) {
+}
+
 void StartUpActivity::activityLoop() {
 	this->stackActivity = new MainMenuActivity(this->environment, this->painter);
 	this->exitCode = ExitCode::STACK;
