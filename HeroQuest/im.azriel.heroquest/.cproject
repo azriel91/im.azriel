@@ -28,11 +28,10 @@
 									<listOptionValue builtIn="false" value="ENABLE_LOGGING"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.247534126" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="d:/libraries/SDL-1.2.15/include/SDL"/>
-									<listOptionValue builtIn="false" value="d:/libraries/SDL_image-1.2.12/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/include/sdl-1.2.15}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/include/sdl_image-1.2.12}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/src/main/cpp}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/bin}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.1076714593" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x -g" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.542481860" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -51,8 +50,8 @@
 									<listOptionValue builtIn="false" value="m"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1164850944" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="d:/libraries/SDL-1.2.15/bin"/>
-									<listOptionValue builtIn="false" value="d:/libraries/SDL_image-1.2.12/lib/x86"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/bin/sdl_image-1.2.12}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/bin/sdl-1.2.15}&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.flags.2147304118" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-static-libgcc -static-libstdc++" valueType="string"/>
 								<option id="gnu.cpp.link.option.userobjs.218008202" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
@@ -178,4 +177,5 @@
 			<resource resourceType="PROJECT" workspacePath="/im.azriel.heroquest"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>
