@@ -14,6 +14,7 @@
 #include "im/azriel/desktop/application/Application.h"
 #include "im/azriel/desktop/graphics/painter/Painter.h"
 #include "im/azriel/desktop/graphics/gl/painter/GlPainter.h"
+#include "im/azriel/desktop/theme/Theme.h"
 #include "im/azriel/heroquest/activity/Activity.hpp"
 #include "im/azriel/heroquest/activity/StartUpActivity.h"
 #include "im/azriel/heroquest/environment/Environment.h"
@@ -24,6 +25,7 @@ using namespace im::azriel::common::logger;
 using namespace im::azriel::desktop::application;
 using namespace im::azriel::desktop::graphics::painter;
 using namespace im::azriel::desktop::graphics::gl::painter;
+using namespace im::azriel::desktop::theme;
 using namespace im::azriel::heroquest::activity;
 using namespace im::azriel::heroquest::environment;
 
@@ -77,25 +79,25 @@ public:
 protected:
 	void handleActivityChange();
 	/**
-	 * Hook method for subclasses to handle key down events
+	 * Hook method for subclasses to handle key down events.
 	 * 
 	 * @param event the key down event
 	 */
 	virtual void handleKeyDown(SDL_Event* const event);
 	/**
-	 * Hook method for subclasses to handle key up events
+	 * Hook method for subclasses to handle key up events.
 	 * 
 	 * @param event the key up event
 	 */
 	virtual void handleKeyUp(SDL_Event* const event);
 	/**
-	 * Hook method for subclasses to handle mouse events
+	 * Hook method for subclasses to handle mouse events.
 	 * 
 	 * @param event the mouse event
 	 */
 	virtual void handleMouseEvent(SDL_Event* const event);
 	/**
-	 * Hook method for subclasses to handle user events
+	 * Hook method for subclasses to handle user events.
 	 * 
 	 * @param event the user event
 	 */
@@ -107,10 +109,18 @@ protected:
 	 * @param viewportHeight the height of the application viewport
 	 * @param theme the currently active theme for this application
 	 *
-	 * @return the Environment object for this application
+	 * @return the Environment
 	 */
 	const im::azriel::heroquest::environment::Environment* initEnvironment(const int viewportWidth,
-	        const int viewportHeight, const Theme* const theme);
+	        const int viewportHeight, const Theme* const theme) const;
+	/**
+	 * Initializes the GlPainter for this application.
+	 *
+	 * @param theme the currently active theme for this application.
+	 *
+	 * @return the GlPainter
+	 */
+	const GlPainter* initGlPainter(const Theme* const theme) const;
 	/**
 	 * Hook method that gets called when the screen needs to be redrawn.
 	 */

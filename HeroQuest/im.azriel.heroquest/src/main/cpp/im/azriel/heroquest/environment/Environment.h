@@ -9,9 +9,9 @@
 #define __IM_AZRIEL_HEROQUEST_ENVIRONMENT__ENVIRONMENT_H_
 
 #include "im/azriel/desktop/application/environment/Environment.h"
-#include "im/azriel/heroquest/theme/Theme.h"
+#include "im/azriel/desktop/theme/Theme.h"
 
-using namespace im::azriel::heroquest::theme;
+using namespace im::azriel::desktop::theme;
 
 namespace im {
 namespace azriel {

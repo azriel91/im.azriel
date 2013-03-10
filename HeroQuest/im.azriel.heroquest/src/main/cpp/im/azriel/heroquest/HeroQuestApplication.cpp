@@ -17,11 +17,9 @@ Logger* const HeroQuestApplication::LOGGER = Logger::getLogger("HeroQuestApplica
 
 HeroQuestApplication::HeroQuestApplication(const int viewportWidth, const int viewportHeight) :
 		        Application(viewportWidth, viewportHeight),
-		        theme(new Theme()),
+		        theme(Theme::loadFromFile("theme.xml")),
 		        environment(initEnvironment(viewportWidth, viewportHeight, theme)),
-		        painter(
-		                new GlPainter(this->theme->getPathForImage(Theme::Image::TEXT), Theme::TEXT_WIDTH,
-		                        Theme::TEXT_HEIGHT)),
+		        painter(initGlPainter(theme)),
 		        activityStack(new stack<Activity<>*>()),
 		        currentActivity(new StartUpActivity(this->environment, this->painter)) {
 }
@@ -164,7 +162,7 @@ void HeroQuestApplication::handleUserEvent(SDL_Event* const event) {
 }
 
 const im::azriel::heroquest::environment::Environment* HeroQuestApplication::initEnvironment(const int viewportWidth,
-        const int viewportHeight, const Theme* const theme) {
+        const int viewportHeight, const Theme* const theme) const {
 	const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo();
 	const im::azriel::heroquest::environment::Environment* environment =
 	        new im::azriel::heroquest::environment::Environment(viewportWidth, viewportHeight, videoInfo->current_w,
@@ -174,6 +172,14 @@ const im::azriel::heroquest::environment::Environment* HeroQuestApplication::ini
 
 void HeroQuestApplication::redraw() {
 	this->currentActivity->redraw();
+}
+
+const GlPainter* HeroQuestApplication::initGlPainter(const Theme* const theme) const {
+	const string textWidthString = theme->getConstant("text-width");
+	const string textHeightString = theme->getConstant("text-height");
+	const int textWidth = atoi(textWidthString.c_str());
+	const int textHeight = atoi(textHeightString.c_str());
+	return new GlPainter(theme->getConstant("text-path"), textWidth, textHeight);
 }
 
 } /* namespace heroquest */

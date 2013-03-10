@@ -32,8 +32,11 @@ void MainMenuActivity::controlKeyReleased(const ControlKeyEvent* const event) {
 }
 
 void MainMenuActivity::preHook() {
-	this->startImage = GlImageFactory::loadImage(
-			        this->environment->getTheme()->getPathForImage(Theme::Image::MAIN_START));
+	const Theme* const theme = this->environment->getTheme();
+	const WidgetData* const startWidgetData = theme->getWidgetData("main/start-game");
+	const Header* const header = startWidgetData->getHeader();
+	auto const imageMetadatas = header->getImageMetadatas();
+	this->startImage = GlImageFactory::loadImage((*imageMetadatas)[0]->getPath());
 }
 
 void MainMenuActivity::postHook() {

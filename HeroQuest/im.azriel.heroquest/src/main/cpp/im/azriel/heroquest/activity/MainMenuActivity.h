@@ -11,10 +11,14 @@
 #include "im/azriel/desktop/graphics/gl/image/GlImage.h"
 #include "im/azriel/desktop/graphics/gl/image/GlImageFactory.h"
 #include "im/azriel/desktop/graphics/painter/Painter.h"
+#include "im/azriel/desktop/theme/xml/Header.h"
+#include "im/azriel/desktop/theme/xml/ImageMetadata.h"
+#include "im/azriel/desktop/theme/xml/WidgetData.h"
 #include "im/azriel/heroquest/activity/Activity.hpp"
 
 using namespace im::azriel::desktop::graphics::gl::image;
 using namespace im::azriel::desktop::graphics::painter;
+using namespace im::azriel::desktop::theme::xml;
 
 namespace im {
 namespace azriel {

@@ -57,6 +57,7 @@
 								<option id="gnu.cpp.link.option.userobjs.218008202" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/bin/im.azriel.desktop.graphics.gl.a}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/bin/im.azriel.desktop.graphics.a}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/bin/im.azriel.desktop.theme.a}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/bin/im.azriel.desktop.application.a}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/bin/im.azriel.common.threading.a}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/lib/bin/im.azriel.common.logger.a}&quot;"/>

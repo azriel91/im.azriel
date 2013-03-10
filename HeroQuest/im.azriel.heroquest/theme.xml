@@ -1,0 +1,124 @@
+<theme>
+
+	<!-- the application assumes the characters are laid out in 10 rows and 25 columns -->
+	<constant id="text-path" value="themes/default/common/text.png" />
+	<constant id="text-height" value="18" />
+	<constant id="text-width" value="10" />
+
+	<widget id="main/start-game">
+		<header>
+			<image path="themes/default/main/start-game.png" />
+		</header>
+
+		<!-- inactive -->
+		<sequence id="0" >
+			<frame>
+				<pic id="0" alpha="100" />
+			</frame>
+		</sequence>
+
+		<!-- transition to full opacity -->
+		<sequence id="1" next="2" >
+			<frame wait="1">
+				<pic id="0" alpha="125" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="150" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="175" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="200" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="225" />
+			</frame>
+		</sequence>
+
+		<!-- selected -->
+		<sequence id="2" >
+			<frame>
+				<pic id="0" alpha="255" />
+			</frame>
+		</sequence>
+
+		<!-- transition to partial opacity -->
+		<sequence id="3" next="999" >
+			<frame wait="1">
+				<pic id="0" alpha="225" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="200" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="175" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="150" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="125" />
+			</frame>
+		</sequence>
+	</widget>
+
+	<widget id="main/control-settings">
+		<header>
+			<image path="themes/default/main/control-settings.png" />
+			<!-- <image path="themes/default/main/control-settings.png" width="100" height="100" rows="1" columns="1" /> -->
+		</header>
+
+		<!-- inactive -->
+		<sequence id="0" >
+			<frame>
+				<pic id="0" alpha="100" />
+			</frame>
+		</sequence>
+
+		<!-- transition to full opacity -->
+		<sequence id="1" next="2" >
+			<frame wait="1">
+				<pic id="0" alpha="125" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="150" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="175" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="200" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="225" />
+			</frame>
+		</sequence>
+
+		<!-- selected -->
+		<sequence id="2" >
+			<frame>
+				<pic id="0" alpha="255" />
+			</frame>
+		</sequence>
+
+		<!-- transition to partial opacity -->
+		<sequence id="3" next="999" >
+			<frame wait="1">
+				<pic id="0" alpha="225" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="200" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="175" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="150" />
+			</frame>
+			<frame wait="1">
+				<pic id="0" alpha="125" />
+			</frame>
+		</sequence>
+	</widget>
+</theme>
