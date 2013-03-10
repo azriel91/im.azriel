@@ -43,6 +43,7 @@
 		<copy todir="${artifact.include.dir}">
 			<fileset dir="${source.dir}">
 				<include name="**/*.h"/>
+				<include name="**/*.hpp"/>
 				<exclude name="**/*.cpp"/>
 			</fileset>
 		</copy>
@@ -56,7 +57,9 @@
 				<copy todir="${artifact.include.dir}">
 					<fileset dir="${lib.include.dir}">
 						<include name="**/*.h"/>
-						<exclude name="**/*.cpp"/>
+						<include name="**/*.hpp"/>
+						<!-- we also include any cpp files that are in here as we assume they were manually added -->
+						<include name="**/*.cpp"/>
 					</fileset>
 				</copy>
 			</then>
