@@ -13,7 +13,7 @@ namespace heroquest {
 namespace activity {
 
 MainMenuActivity::MainMenuActivity(const im::azriel::heroquest::environment::Environment* const environment,
-        const Painter* const painter) :
+        const GlPainter* const painter) :
 		Activity<>(environment, painter), startImage(nullptr) {
 }
 

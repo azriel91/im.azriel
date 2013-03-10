@@ -16,14 +16,14 @@
 #include "im/azriel/common/threading/Runnable.h"
 #include "im/azriel/common/threading/Thread.h"
 #include "im/azriel/desktop/application/Application.h"
-#include "im/azriel/desktop/graphics/painter/Painter.h"
+#include "im/azriel/desktop/graphics/gl/painter/GlPainter.h"
 #include "im/azriel/heroquest/environment/Environment.h"
 #include "im/azriel/heroquest/input/ControlKeyListener.h"
 
 using namespace im::azriel::common::logger;
 using namespace im::azriel::common::threading;
 using namespace im::azriel::desktop::application;
-using namespace im::azriel::desktop::graphics::painter;
+using namespace im::azriel::desktop::graphics::gl::painter;
 using namespace im::azriel::heroquest::environment;
 using namespace im::azriel::heroquest::input;
 
@@ -79,7 +79,7 @@ protected:
 	/**
 	 * The painter instance to render images to the screen.
 	 */
-	const Painter* painter;
+	const GlPainter* painter;
 	/**
 	 * Whether this activity is running.
 	 */
@@ -98,8 +98,8 @@ protected:
 	T* returnValue;
 
 public:
-	Activity(const im::azriel::heroquest::environment::Environment* const environment, const Painter* const painter);
-	Activity(const im::azriel::heroquest::environment::Environment* const environment, const Painter* const painter,
+	Activity(const im::azriel::heroquest::environment::Environment* const environment, const GlPainter* const painter);
+	Activity(const im::azriel::heroquest::environment::Environment* const environment, const GlPainter* const painter,
 	        const double fps);
 	virtual ~Activity();
 
@@ -171,7 +171,7 @@ Logger* const Activity<T>::LOGGER = Logger::getLogger("Activity<T>::LOGGER");
 
 template<class T>
 Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* const environment,
-        const Painter* const painter) :
+        const GlPainter* const painter) :
 		        thread(nullptr),
 		        delay((Uint32) (1000.0 / DEFAULT_FPS)),
 		        activityLock(SDL_CreateMutex()),
@@ -186,7 +186,7 @@ Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* con
 
 template<class T>
 Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* const environment,
-        const Painter* const painter, const double fps) :
+        const GlPainter* const painter, const double fps) :
 		        thread(nullptr),
 		        delay((Uint32) (1000.0 / fps)),
 		        activityLock(SDL_CreateMutex()),

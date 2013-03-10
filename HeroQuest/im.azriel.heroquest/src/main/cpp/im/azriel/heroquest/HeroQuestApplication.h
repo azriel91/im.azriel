@@ -12,7 +12,6 @@
 
 #include "im/azriel/common/logger/Logger.h"
 #include "im/azriel/desktop/application/Application.h"
-#include "im/azriel/desktop/graphics/painter/Painter.h"
 #include "im/azriel/desktop/graphics/gl/painter/GlPainter.h"
 #include "im/azriel/desktop/theme/Theme.h"
 #include "im/azriel/heroquest/activity/Activity.hpp"
@@ -23,7 +22,6 @@ using namespace std;
 
 using namespace im::azriel::common::logger;
 using namespace im::azriel::desktop::application;
-using namespace im::azriel::desktop::graphics::painter;
 using namespace im::azriel::desktop::graphics::gl::painter;
 using namespace im::azriel::desktop::theme;
 using namespace im::azriel::heroquest::activity;
@@ -54,7 +52,7 @@ protected:
 	/**
 	 * The painter for this application.
 	 */
-	const Painter* const painter;
+	const GlPainter* const painter;
 	/**
 	 * The activity stack.
 	 */

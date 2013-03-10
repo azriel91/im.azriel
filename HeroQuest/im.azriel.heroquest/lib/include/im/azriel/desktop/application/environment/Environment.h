@@ -8,10 +8,6 @@
 #ifndef ENVIRONMENT_H_
 #define ENVIRONMENT_H_
 
-#include "im/azriel/desktop/graphics/painter/Painter.h"
-
-using namespace im::azriel::desktop::graphics::painter;
-
 namespace im {
 namespace azriel {
 namespace desktop {

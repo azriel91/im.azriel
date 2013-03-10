@@ -11,12 +11,7 @@
 #include <string>
 #include <vector>
 
-#include "im/azriel/desktop/graphics/image/Image.h"
-#include "im/azriel/desktop/graphics/image/ImageSheet.h"
-
 using namespace std;
-
-using namespace im::azriel::desktop::graphics::image;
 
 namespace im {
 namespace azriel {
@@ -24,6 +19,7 @@ namespace desktop {
 namespace graphics {
 namespace painter {
 
+template<class Image, class ImageSheet>
 class Painter {
 public:
 	Painter();
@@ -213,9 +209,18 @@ public:
 	virtual void translate(const int x, const int y) const = 0;
 };
 
+template<class Image, class ImageSheet>
+Painter<Image, ImageSheet>::Painter() {
+}
+
+template<class Image, class ImageSheet>
+Painter<Image, ImageSheet>::~Painter() {
+}
+
 } /* namespace painter */
 } /* namespace graphics */
 } /* namespace desktop */
 } /* namespace azriel */
 } /* namespace im */
+
 #endif /* __IM_AZRIEL_DESKTOP_GRAPHICS_PAINTER__PAINTER_H_ */

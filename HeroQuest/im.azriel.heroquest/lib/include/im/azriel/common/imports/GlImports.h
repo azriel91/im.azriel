@@ -10,8 +10,6 @@
 
 #ifdef __WIN32__
 	#include <gl/gl.h>
-	#include "sdl.h"
-	#include "sdl_opengl.h"
 #else
 	#ifdef __linux__
 		#include <GL/gl.h>

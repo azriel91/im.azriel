@@ -8,13 +8,16 @@
 #ifndef __IM_AZRIEL_HEROQUEST_ACTIVITY__STARTUPACTIVITY_H_
 #define __IM_AZRIEL_HEROQUEST_ACTIVITY__STARTUPACTIVITY_H_
 
+#include "im/azriel/desktop/graphics/gl/painter/GlPainter.h"
 #include "im/azriel/heroquest/activity/Activity.hpp"
 #include "im/azriel/heroquest/activity/MainMenuActivity.h"
 #include "im/azriel/heroquest/environment/Environment.h"
+#include "im/azriel/heroquest/input/ControlKeyEvent.h"
 
 using namespace im::azriel::desktop::graphics::gl::image;
-using namespace im::azriel::desktop::graphics::painter;
+using namespace im::azriel::desktop::graphics::gl::painter;
 using namespace im::azriel::heroquest::environment;
+using namespace im::azriel::heroquest::input;
 
 namespace im {
 namespace azriel {
@@ -25,7 +28,7 @@ class StartUpActivity: public Activity<void> {
 
 public:
 	StartUpActivity(const im::azriel::heroquest::environment::Environment* const environment,
-			const Painter* const painter);
+			const GlPainter* const painter);
 	virtual ~StartUpActivity();
 
 	/**

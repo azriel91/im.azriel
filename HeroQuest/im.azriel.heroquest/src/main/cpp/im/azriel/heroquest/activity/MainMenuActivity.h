@@ -10,14 +10,14 @@
 
 #include "im/azriel/desktop/graphics/gl/image/GlImage.h"
 #include "im/azriel/desktop/graphics/gl/image/GlImageFactory.h"
-#include "im/azriel/desktop/graphics/painter/Painter.h"
+#include "im/azriel/desktop/graphics/gl/painter/GlPainter.h"
 #include "im/azriel/desktop/theme/xml/Header.h"
 #include "im/azriel/desktop/theme/xml/ImageMetadata.h"
 #include "im/azriel/desktop/theme/xml/WidgetData.h"
 #include "im/azriel/heroquest/activity/Activity.hpp"
 
 using namespace im::azriel::desktop::graphics::gl::image;
-using namespace im::azriel::desktop::graphics::painter;
+using namespace im::azriel::desktop::graphics::gl::painter;
 using namespace im::azriel::desktop::theme::xml;
 
 namespace im {
@@ -31,7 +31,7 @@ private:
 
 public:
 	MainMenuActivity(const im::azriel::heroquest::environment::Environment* const environment,
-	        const Painter* const painter);
+	        const GlPainter* const painter);
 	virtual ~MainMenuActivity();
 	/**
 	 * Function that requests this Activity to redraw itself. Should only be called by the UI thread.
