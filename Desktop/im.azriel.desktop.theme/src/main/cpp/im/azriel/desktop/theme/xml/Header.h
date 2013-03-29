@@ -35,7 +35,7 @@ public:
 	 *
 	 * @return the vector of metadata
 	 */
-	const vector<const ImageMetadata*>* const getImageMetadatas() const;
+	const vector<const ImageMetadata*>* getImageMetadatas() const;
 };
 
 } /* namespace xml */

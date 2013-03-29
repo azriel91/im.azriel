@@ -46,7 +46,7 @@ public:
 	 *
 	 * @return the header
 	 */
-	const Header* const getHeader() const;
+	const Header* getHeader() const;
 	/**
 	 * Get the id of this widget data.
 	 *
@@ -58,7 +58,7 @@ public:
 	 *
 	 * @return the sequences
 	 */
-	const vector<const Sequence*>* const getSequences() const;
+	const vector<const Sequence*>* getSequences() const;
 };
 
 } /* namespace xml */

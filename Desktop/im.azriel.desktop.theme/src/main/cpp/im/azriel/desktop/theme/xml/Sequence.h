@@ -21,17 +21,6 @@ namespace theme {
 namespace xml {
 
 class Sequence {
-public:
-	// TODO move to controller
-	/**
-	 * Value indicating that the next sequence should be the sequence with id="0".
-	 */
-	static constexpr int FIRST_SEQUENCE = 999;
-	/**
-	 * Value indicating that the when the current sequence ends, the sequence will stay on the last frame.
-	 */
-	static constexpr int NO_NEXT = 0;
-
 private:
 	/**
 	 * The id of this sequence.
@@ -66,7 +55,7 @@ public:
 	 *
 	 * @return the frames
 	 */
-	const vector<const Frame*>* const getFrames() const;
+	const vector<const Frame*>* getFrames() const;
 };
 
 } /* namespace xml */

@@ -25,7 +25,7 @@ Header::~Header() {
 	delete this->imageMetadatas;
 }
 
-const vector<const ImageMetadata*>* const Header::getImageMetadatas() const {
+const vector<const ImageMetadata*>* Header::getImageMetadatas() const {
 	return this->imageMetadatas;
 }
 

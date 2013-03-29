@@ -26,7 +26,7 @@ WidgetData::~WidgetData() {
 	delete this->sequences;
 }
 
-const Header* const WidgetData::getHeader() const {
+const Header* WidgetData::getHeader() const {
 	return header;
 }
 
@@ -34,7 +34,7 @@ const string WidgetData::getId() const {
 	return this->id;
 }
 
-const vector<const Sequence*>* const WidgetData::getSequences() const {
+const vector<const Sequence*>* WidgetData::getSequences() const {
 	return sequences;
 }
 

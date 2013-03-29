@@ -20,7 +20,7 @@ Frame::~Frame() {
 	delete this->pic;
 }
 
-const ImageReference* const Frame::getPic() const {
+const ImageReference* Frame::getPic() const {
 	return this->pic;
 }
 

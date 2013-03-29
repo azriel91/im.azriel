@@ -18,8 +18,7 @@ Sequence::Sequence(const int id, const int nextSequenceId, const vector<const Fr
 }
 
 Sequence::~Sequence() {
-	for (vector<const Frame*>::const_iterator it = this->frames->begin(); it != this->frames->end(); it++) {
-		const Frame* frame = (*it);
+	for (auto frame : *this->frames) {
 		delete frame;
 	}
 	delete this->frames;
@@ -33,7 +32,7 @@ const int Sequence::getNextSequenceId() const {
 	return this->nextSequenceId;
 }
 
-const vector<const Frame*>* const Sequence::getFrames() const {
+const vector<const Frame*>* Sequence::getFrames() const {
 	return this->frames;
 }
 

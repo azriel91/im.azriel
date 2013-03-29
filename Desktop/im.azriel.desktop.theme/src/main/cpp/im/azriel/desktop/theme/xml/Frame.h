@@ -35,7 +35,7 @@ public:
 	 *
 	 * @return the image reference
 	 */
-	const ImageReference* const getPic() const;
+	const ImageReference* getPic() const;
 	/**
 	 * Get the number of frames to wait before transitioning to the next frame.
 	 *
