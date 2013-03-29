@@ -42,9 +42,9 @@ private:
 public:
 	static const GlImage* loadImage(const string path) throw (ImageLoadException);
 	static const GlImageSheet* loadImageSheet(const string path, const int subImageWidth, const int subImageHeight,
-	        const int rowCount, const int columnCount) throw (ImageLoadException);
+			const int rowCount, const int columnCount) throw (ImageLoadException);
 	static const GlImageSheet* loadImageSheet(const string path, const int subImageWidth, const int subImageHeight,
-	        const int rowCount, const int columnCount, const int border) throw (ImageLoadException);
+			const int rowCount, const int columnCount, const int border) throw (ImageLoadException);
 
 private:
 	static SDL_Surface* convertDimensionsToPowerOfTwo(const SDL_Surface* const image);
@@ -53,8 +53,8 @@ private:
 	static GLubyte* create8BitTexMap(const Uint8* const pixels, const SDL_PixelFormat* const fmt, const int length);
 	static GLubyte* create32BitTexMap(const Uint32* const pixels, const SDL_PixelFormat* const fmt, const int length);
 	static const vector<const GlVertexMap*>* calculateVertexMaps(const int subImageWidth, const int subImageHeight,
-	        const int rowCount, const int columnCount, const int textureWidth, const int textureHeight,
-	        const int border);
+			const int rowCount, const int columnCount, const int textureWidth, const int textureHeight,
+			const int border);
 };
 
 } /* namespace image */

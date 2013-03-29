@@ -6,6 +6,7 @@
  */
 
 #include "im/azriel/desktop/graphics/image/Image.h"
+#include "im/azriel/desktop/graphics/session/ImageSession.hpp"
 
 namespace im {
 namespace azriel {

@@ -35,12 +35,12 @@ const GlImage* GlImageFactory::loadImage(const string path) throw (ImageLoadExce
 }
 
 const GlImageSheet* GlImageFactory::loadImageSheet(const string path, const int subImageWidth, const int subImageHeight,
-        const int rowCount, const int columnCount) throw (ImageLoadException) {
+		const int rowCount, const int columnCount) throw (ImageLoadException) {
 	return loadImageSheet(path, subImageWidth, subImageHeight, rowCount, columnCount, 0);
 }
 
 const GlImageSheet* GlImageFactory::loadImageSheet(const string path, const int subImageWidth, const int subImageHeight,
-        const int rowCount, const int columnCount, const int border) throw (ImageLoadException) {
+		const int rowCount, const int columnCount, const int border) throw (ImageLoadException) {
 #ifdef ENABLE_LOGGING
 	LOGGER->debug("Loading imagesheet: %s", path.c_str());
 #endif
@@ -52,10 +52,10 @@ const GlImageSheet* GlImageFactory::loadImageSheet(const string path, const int 
 
 	// calculate vertex maps
 	const vector<const GlVertexMap*>* const vertexMaps = calculateVertexMaps(subImageWidth, subImageHeight,
-	        rowCount, columnCount, resizedImage->w, resizedImage->h, border);
+			rowCount, columnCount, resizedImage->w, resizedImage->h, border);
 
 	const GlImageSheet* const glImageSheet = new GlImageSheet(textureId, image->w, image->h, resizedImage->w,
-	        resizedImage->h, subImageWidth, subImageHeight, rowCount, columnCount, vertexMaps);
+			resizedImage->h, subImageWidth, subImageHeight, rowCount, columnCount, vertexMaps);
 
 	SDL_FreeSurface(image);
 	SDL_FreeSurface(resizedImage);
@@ -86,7 +86,7 @@ SDL_Surface* GlImageFactory::convertDimensionsToPowerOfTwo(const SDL_Surface* co
 	const int width = pow(2, ceil(log2(image->w)));
 	const int height = pow(2, ceil(log2(image->h)));
 	SDL_Surface* const resizedImage = SDL_CreateRGBSurface(image->flags, width, height, format->BitsPerPixel,
-	        format->Rmask, format->Gmask, format->Bmask, format->Amask);
+			format->Rmask, format->Gmask, format->Bmask, format->Amask);
 
 	// cannot use blit because we're using openGl, so have to manually copy pixel data
 	const Uint32* const srcPixels = (Uint32*) image->pixels;
@@ -146,7 +146,7 @@ const GLuint GlImageFactory::createTexture(const SDL_Surface* const sSheet) {
  * TODO: check if this works (not sure if color == fmt->colorKey is correct)
  */
 GLubyte* GlImageFactory::create8BitTexMap(const Uint8* const pixels, const SDL_PixelFormat* const fmt,
-        const int length) {
+		const int length) {
 
 	const int bppShift = 2; // 4 bytes per pixel, log[base 2](4) = 2
 	GLubyte* const texels = new GLubyte[length * 4]; // 4 bytes per pixel
@@ -168,7 +168,7 @@ GLubyte* GlImageFactory::create8BitTexMap(const Uint8* const pixels, const SDL_P
 }
 
 GLubyte* GlImageFactory::create32BitTexMap(const Uint32* const pixels, const SDL_PixelFormat* const fmt,
-        const int length) {
+		const int length) {
 
 	const int bytesPerPx = 4;
 	const int bppShift = 2; // 4 bytes per pixel, log[base 2](4) = 2
@@ -215,7 +215,7 @@ GLubyte* GlImageFactory::create32BitTexMap(const Uint32* const pixels, const SDL
 }
 
 const vector<const GlVertexMap*>* GlImageFactory::calculateVertexMaps(const int subImageWidth, const int subImageHeight,
-        const int rowCount, const int columnCount, const int textureWidth, const int textureHeight, const int border) {
+		const int rowCount, const int columnCount, const int textureWidth, const int textureHeight, const int border) {
 
 	vector<const GlVertexMap*>* const vertexMaps = new vector<const GlVertexMap*>();
 

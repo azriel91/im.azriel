@@ -8,17 +8,25 @@
 #ifndef __IM_AZRIEL_HEROQUEST_ACTIVITY__MAINMENUACTIVITY_H_
 #define __IM_AZRIEL_HEROQUEST_ACTIVITY__MAINMENUACTIVITY_H_
 
+#include <string>
+
 #include "im/azriel/desktop/graphics/gl/image/GlImage.h"
 #include "im/azriel/desktop/graphics/gl/image/GlImageFactory.h"
 #include "im/azriel/desktop/graphics/gl/painter/GlPainter.h"
+#include "im/azriel/desktop/graphics/gl/session/GlImageSession.h"
 #include "im/azriel/desktop/theme/xml/Header.h"
 #include "im/azriel/desktop/theme/xml/ImageMetadata.h"
 #include "im/azriel/desktop/theme/xml/WidgetData.h"
 #include "im/azriel/heroquest/activity/Activity.hpp"
+#include "im/azriel/heroquest/activity/widget/MenuItem.h"
+
+using namespace std;
 
 using namespace im::azriel::desktop::graphics::gl::image;
 using namespace im::azriel::desktop::graphics::gl::painter;
+using namespace im::azriel::desktop::graphics::gl::session;
 using namespace im::azriel::desktop::theme::xml;
+using namespace im::azriel::heroquest::activity::widget;
 
 namespace im {
 namespace azriel {
@@ -27,7 +35,10 @@ namespace activity {
 
 class MainMenuActivity : public Activity<void> {
 private:
-	const GlImage* startImage;
+	MenuItem* startMenuItem;
+	MenuItem* controlSettingsMenuItem;
+
+	MenuItem* activeMenuItem;
 
 public:
 	MainMenuActivity(const im::azriel::heroquest::environment::Environment* const environment,
