@@ -54,6 +54,13 @@ protected:
 	 * @return the set of ControlKeyListeners that are registered with this input source
 	 */
 	const set<ControlKeyListener*> getListeners() const;
+	/**
+	 * Sets the specified control key's enabled state.
+	 *
+	 * @param code the control key code
+	 * @param enabled the state of the control key
+	 */
+	virtual void setControlKeyEnabled(const int code, const bool enabled);
 };
 
 } /* namespace input */

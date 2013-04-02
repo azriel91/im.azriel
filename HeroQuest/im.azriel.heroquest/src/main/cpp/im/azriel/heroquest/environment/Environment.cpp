@@ -13,13 +13,18 @@ namespace heroquest {
 namespace environment {
 
 Environment::Environment(const int viewportWidth, const int viewportHeight, const int screenWidth,
-		const int screenHeight, const Theme* const theme) :
-				im::azriel::desktop::application::environment::Environment(viewportWidth, viewportHeight, screenWidth,
-						screenHeight),
-				theme(theme) {
+        const int screenHeight, const Controls* const controls, const Theme* const theme) :
+		        im::azriel::desktop::application::environment::Environment(viewportWidth, viewportHeight, screenWidth,
+		                screenHeight),
+		        controls(controls),
+		        theme(theme) {
 }
 
 Environment::~Environment() {
+}
+
+const Controls* Environment::getControls() const {
+	return this->controls;
 }
 
 const Theme* Environment::getTheme() const {

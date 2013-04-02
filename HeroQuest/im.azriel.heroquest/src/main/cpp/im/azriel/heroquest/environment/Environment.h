@@ -10,8 +10,10 @@
 
 #include "im/azriel/desktop/application/environment/Environment.h"
 #include "im/azriel/desktop/theme/Theme.h"
+#include "im/azriel/heroquest/input/Controls.h"
 
 using namespace im::azriel::desktop::theme;
+using namespace im::azriel::heroquest::input;
 
 namespace im {
 namespace azriel {
@@ -21,14 +23,20 @@ namespace environment {
 class Environment: public im::azriel::desktop::application::environment::Environment {
 protected:
 	/**
+	 * The controls in this environment;
+	 */
+	const Controls* const controls;
+	/**
 	 * The current theme.
 	 */
 	const Theme* theme;
+
 public:
 	Environment(const int viewportWidth, const int viewportHeight, const int screenWidth, const int screenHeight,
-			const Theme* const theme);
+			const Controls* const controls, const Theme* const theme);
 	virtual ~Environment();
 
+	const Controls* getControls() const;
 	const Theme* getTheme() const;
 	void setTheme(const Theme* const theme);
 };

@@ -17,6 +17,7 @@ Logger* const HeroQuestApplication::LOGGER = Logger::getLogger("HeroQuestApplica
 
 HeroQuestApplication::HeroQuestApplication(const int viewportWidth, const int viewportHeight) :
 		        Application(viewportWidth, viewportHeight),
+		        controls(Controls::loadFromFile("controls.xml")),
 		        theme(Theme::loadFromFile("theme.xml")),
 		        environment(initEnvironment(viewportWidth, viewportHeight, theme)),
 		        painter(initGlPainter(theme)),
@@ -28,6 +29,7 @@ HeroQuestApplication::~HeroQuestApplication() {
 	delete this->activityStack;
 	delete this->theme;
 	delete this->environment;
+	delete this->controls;
 }
 
 void HeroQuestApplication::start() {
@@ -46,7 +48,7 @@ void HeroQuestApplication::handleActivityChange() {
 		} else {
 			this->currentActivity = this->activityStack->top();
 			this->activityStack->pop();
-//			registerListener(this->currentActivity);
+			registerControlKeyListener(this->currentActivity);
 			this->currentActivity->start();
 		}
 		return;
@@ -60,7 +62,7 @@ void HeroQuestApplication::handleActivityChange() {
 			        typeid(*this->currentActivity).name(), exitCode);
 #endif
 			this->currentActivity->stop();
-//			unregisterListener(this->currentActivity);
+			unregisterControlKeyListener(this->currentActivity);
 			this->currentActivity->finalize();
 			delete this->currentActivity;
 
@@ -73,7 +75,7 @@ void HeroQuestApplication::handleActivityChange() {
 			} else {
 				this->currentActivity = this->activityStack->top();
 				this->activityStack->pop();
-//				registerListener(this->currentActivity);
+				registerControlKeyListener(this->currentActivity);
 				this->currentActivity->start();
 			}
 			break;
@@ -83,16 +85,19 @@ void HeroQuestApplication::handleActivityChange() {
 			HeroQuestApplication::LOGGER->error("Activity %s returned with exit code: %d.",
 			        typeid(*this->currentActivity).name(), exitCode);
 #endif
-//			unregisterListener(this->currentActivity);
+			unregisterControlKeyListener(this->currentActivity);
 			this->currentActivity->finalize();
 			delete this->currentActivity;
-			if (activityStack->empty()) {
-				// TODO: exit application?
+			if (this->activityStack->empty()) {
 				this->currentActivity = nullptr;
+
+				// no activities left on stack, exit the application
+				quit(0);
+
 			} else {
 				this->currentActivity = this->activityStack->top();
 				this->activityStack->pop();
-//				registerListener(this->currentActivity);
+				registerControlKeyListener(this->currentActivity);
 				this->currentActivity->start();
 			}
 			break;
@@ -103,12 +108,12 @@ void HeroQuestApplication::handleActivityChange() {
 			        typeid(*this->currentActivity).name(), exitCode);
 #endif
 			this->currentActivity->stop();
-//			unregisterListener(this->currentActivity);
+			unregisterControlKeyListener(this->currentActivity);
 			this->activityStack->push(this->currentActivity);
 			Activity<>* stackActivity = this->currentActivity->getStackActivity();
 			this->currentActivity = stackActivity;
 			stackActivity->initialize();
-//			registerListener(this->currentActivity);
+			registerControlKeyListener(this->currentActivity);
 			stackActivity->start();
 		}
 			break;
@@ -119,7 +124,8 @@ void HeroQuestApplication::handleActivityChange() {
 }
 
 void HeroQuestApplication::handleKeyDown(SDL_Event* const event) {
-	switch (event->key.keysym.sym) {
+	const int keyCode = event->key.keysym.sym;
+	switch (keyCode) {
 		case SDLK_ESCAPE:
 			quit(0);
 			break;
@@ -131,6 +137,9 @@ void HeroQuestApplication::handleKeyDown(SDL_Event* const event) {
 			break;
 
 		default:
+			for (auto const keyboardControlKeyInputSource : *this->controls->getKeyboardSynchronizedControlKeyInputSources()) {
+				keyboardControlKeyInputSource->keyPressed(keyCode);
+			}
 			break;
 	}
 }
@@ -145,6 +154,9 @@ void HeroQuestApplication::handleKeyUp(SDL_Event* const event) {
 			break;
 
 		default:
+			for (auto const keyboardControlKeyInputSource : *this->controls->getKeyboardSynchronizedControlKeyInputSources()) {
+				keyboardControlKeyInputSource->keyReleased(keyCode);
+			}
 			break;
 	}
 }
@@ -166,7 +178,7 @@ const im::azriel::heroquest::environment::Environment* HeroQuestApplication::ini
 	const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo();
 	const im::azriel::heroquest::environment::Environment* environment =
 	        new im::azriel::heroquest::environment::Environment(viewportWidth, viewportHeight, videoInfo->current_w,
-	                videoInfo->current_h, theme);
+	                videoInfo->current_h, this->controls, theme);
 	return environment;
 }
 
@@ -180,6 +192,18 @@ const GlPainter* HeroQuestApplication::initGlPainter(const Theme* const theme) c
 	const int textWidth = atoi(textWidthString.c_str());
 	const int textHeight = atoi(textHeightString.c_str());
 	return new GlPainter(theme->getConstant("text-path"), textWidth, textHeight);
+}
+
+void HeroQuestApplication::registerControlKeyListener(ControlKeyListener* const listener) const {
+	for (auto const controlKeyInputSource : *this->controls->getControlKeyInputSources()) {
+		controlKeyInputSource->registerControlKeyListener(listener);
+	}
+}
+
+void HeroQuestApplication::unregisterControlKeyListener(ControlKeyListener* const listener) const {
+	for (auto const controlKeyInputSource : *this->controls->getControlKeyInputSources()) {
+		controlKeyInputSource->unregisterControlKeyListener(listener);
+	}
 }
 
 } /* namespace heroquest */

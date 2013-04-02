@@ -1,0 +1,11 @@
+<controls>
+	<controller name="Player 1">
+		<controlKey name="up" keyCode="273" />
+		<controlKey name="down" keyCode="274" />
+		<controlKey name="left" keyCode="276" />
+		<controlKey name="right" keyCode="275" />
+		<controlKey name="attack" keyCode="111" />
+		<controlKey name="jump" keyCode="112" />
+		<controlKey name="defend" keyCode="91" />
+	</controller>
+</controls>

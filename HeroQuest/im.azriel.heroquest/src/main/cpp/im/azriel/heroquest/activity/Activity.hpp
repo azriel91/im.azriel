@@ -18,6 +18,7 @@
 #include "im/azriel/desktop/application/Application.h"
 #include "im/azriel/desktop/graphics/gl/painter/GlPainter.h"
 #include "im/azriel/heroquest/environment/Environment.h"
+#include "im/azriel/heroquest/input/Controls.h"
 #include "im/azriel/heroquest/input/ControlKeyListener.h"
 
 using namespace im::azriel::common::logger;
@@ -119,6 +120,10 @@ public:
 	 * Function that requests this Activity to redraw itself. Should only be called by the UI thread.
 	 */
 	virtual void redraw() = 0;
+	/**
+	 * Fires the synchronized control input sources' control key events.
+	 */
+	void fireSynchronizedControlKeyEvents() const;
 	/**
 	 * Gets the exit code of this activity.
 	 */
@@ -245,6 +250,7 @@ int Activity<T>::run() {
 	while (this->running) {
 		Uint32 startTime = SDL_GetTicks();
 
+		fireSynchronizedControlKeyEvents();
 		activityLoop();
 		requestRedraw();
 
@@ -284,6 +290,15 @@ void Activity<T>::stop() {
 		this->thread->join();
 		delete this->thread;
 		this->thread = nullptr;
+	}
+}
+
+template<class T>
+void Activity<T>::fireSynchronizedControlKeyEvents() const {
+	const Controls* const controls = this->environment->getControls();
+	auto const controlKeyInputSources = controls->getControlKeyInputSources();
+	for (auto const controlKeyInputSource : *controlKeyInputSources) {
+		controlKeyInputSource->fireEvents();
 	}
 }
 

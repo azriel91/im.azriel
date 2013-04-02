@@ -8,6 +8,7 @@
 #ifndef __IM_AZRIEL_HEROQUEST__APPLICATION_H_
 #define __IM_AZRIEL_HEROQUEST__APPLICATION_H_
 
+#include <set>
 #include <stack>
 
 #include "im/azriel/common/logger/Logger.h"
@@ -17,6 +18,8 @@
 #include "im/azriel/heroquest/activity/Activity.hpp"
 #include "im/azriel/heroquest/activity/StartUpActivity.h"
 #include "im/azriel/heroquest/environment/Environment.h"
+#include "im/azriel/heroquest/input/Controls.h"
+#include "im/azriel/heroquest/input/SynchronizedControlKeyInputSource.h"
 
 using namespace std;
 
@@ -26,6 +29,7 @@ using namespace im::azriel::desktop::graphics::gl::painter;
 using namespace im::azriel::desktop::theme;
 using namespace im::azriel::heroquest::activity;
 using namespace im::azriel::heroquest::environment;
+using namespace im::azriel::heroquest::input;
 
 namespace im {
 namespace azriel {
@@ -41,6 +45,10 @@ private:
 #endif
 
 protected:
+	/**
+	 * Stores information about the controllers for this application.
+	 */
+	const Controls* const controls;
 	/**
 	 * The theme to use.
 	 */
@@ -119,6 +127,18 @@ protected:
 	 * @return the GlPainter
 	 */
 	const GlPainter* initGlPainter(const Theme* const theme) const;
+	/**
+	 * Registers a control key listener with all of the control key input sources in this application.
+	 *
+	 * @param listener the listener to register
+	 */
+	void registerControlKeyListener(ControlKeyListener* const listener) const;
+	/**
+	 * Unregisters a control key listener from all of the control key input sources in this application.
+	 *
+	 * @param listener the listener to unregister
+	 */
+	void unregisterControlKeyListener(ControlKeyListener* const listener) const;
 	/**
 	 * Hook method that gets called when the screen needs to be redrawn.
 	 */
