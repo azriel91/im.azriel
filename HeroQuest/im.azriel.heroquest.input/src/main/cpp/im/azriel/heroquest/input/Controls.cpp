@@ -16,21 +16,57 @@ namespace input {
 Logger* const Controls::LOGGER = Logger::getLogger("Controls::LOGGER");
 #endif
 
-Controls::Controls(const vector<const ControlData*>* const controlDatas) : controlDatas(controlDatas) {
+Controls::Controls(
+        const set<KeyboardSynchronizedControlKeyInputSource*>* const keyboardSynchronizedControlKeyInputSources) :
+		        keyboardSynchronizedControlKeyInputSources(keyboardSynchronizedControlKeyInputSources),
+		        controlKeyInputSources(collateControlKeyInputSources()) {
 }
 
 Controls::~Controls() {
-	for (auto const controlData : *this->controlDatas) {
-		delete controlData;
+	for (auto const controlKeyInputSource : *this->controlKeyInputSources) {
+		delete controlKeyInputSource;
 	}
-	delete this->controlDatas;
+	delete this->controlKeyInputSources;
+
+	delete this->keyboardSynchronizedControlKeyInputSources;
 }
 
-const vector<const ControlData*>* Controls::getControlDatas() const {
-	return this->controlDatas;
+const set<SynchronizedControlKeyInputSource*>* Controls::getControlKeyInputSources() const {
+	return this->controlKeyInputSources;
+}
+
+const set<KeyboardSynchronizedControlKeyInputSource*>* Controls::getKeyboardSynchronizedControlKeyInputSources() const {
+	return this->keyboardSynchronizedControlKeyInputSources;
+}
+
+const set<SynchronizedControlKeyInputSource*>* Controls::collateControlKeyInputSources() const {
+	auto const controlKeyInputSources = new set<SynchronizedControlKeyInputSource*>();
+	controlKeyInputSources->insert(
+			this->keyboardSynchronizedControlKeyInputSources->begin(),
+	        this->keyboardSynchronizedControlKeyInputSources->end());
+	return controlKeyInputSources;
 }
 
 Controls* Controls::loadFromFile(const string path) {
+	auto const controlDatas = deserializeControls(path);
+	auto const keyboardSynchronizedControlKeyInputSources = new set<KeyboardSynchronizedControlKeyInputSource*>();
+
+	int* const keyCodes = new int[ControlKeyCode::BUTTON_COUNT];
+	for (auto const controlData : *controlDatas) {
+		keyCodes[ControlKeyCode::UP] = controlData->getKeyCodeForControlKey("up");
+		keyCodes[ControlKeyCode::DOWN] = controlData->getKeyCodeForControlKey("down");
+		keyCodes[ControlKeyCode::LEFT] = controlData->getKeyCodeForControlKey("left");
+		keyCodes[ControlKeyCode::RIGHT] = controlData->getKeyCodeForControlKey("right");
+		keyCodes[ControlKeyCode::ATTACK] = controlData->getKeyCodeForControlKey("attack");
+		keyCodes[ControlKeyCode::JUMP] = controlData->getKeyCodeForControlKey("jump");
+		keyCodes[ControlKeyCode::DEFEND] = controlData->getKeyCodeForControlKey("defend");
+		keyboardSynchronizedControlKeyInputSources->insert(new KeyboardSynchronizedControlKeyInputSource(keyCodes));
+	}
+
+	return new Controls(keyboardSynchronizedControlKeyInputSources);
+}
+
+const vector<const ControlData*>* Controls::deserializeControls(const string path) {
 	auto const controlDatas = new vector<const ControlData*>();
 
 	xml_document doc;
@@ -49,7 +85,7 @@ Controls* Controls::loadFromFile(const string path) {
 		controlDatas->push_back(controlData);
 	}
 
-	return new Controls(controlDatas);
+	return controlDatas;
 }
 
 const ControlData* Controls::deserializeControlData(const xml_node node) {
