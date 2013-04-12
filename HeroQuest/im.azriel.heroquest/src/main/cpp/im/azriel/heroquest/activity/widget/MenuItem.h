@@ -18,8 +18,8 @@ namespace widget {
 
 class MenuItem : public Widget {
 private:
-	static constexpr int NON_FOCUSED_SEQUENCE = 0;
-	static constexpr int FOCUSED_SEQUENCE = 2;
+	static constexpr int TRANSITION_TO_ACTIVE_SEQUENCE = 1;
+	static constexpr int TRANSITION_TO_INACTIVE_SEQUENCE = 3;
 
 private:
 	/**

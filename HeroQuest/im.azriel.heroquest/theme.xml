@@ -19,19 +19,19 @@
 
 		<!-- transition to full opacity -->
 		<sequence id="1" next="2" >
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="125" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="150" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="175" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="200" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="225" />
 			</frame>
 		</sequence>
@@ -45,19 +45,19 @@
 
 		<!-- transition to partial opacity -->
 		<sequence id="3" next="999" >
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="225" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="200" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="175" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="150" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="125" />
 			</frame>
 		</sequence>
@@ -78,19 +78,19 @@
 
 		<!-- transition to full opacity -->
 		<sequence id="1" next="2" >
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="125" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="150" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="175" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="200" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="225" />
 			</frame>
 		</sequence>
@@ -104,19 +104,19 @@
 
 		<!-- transition to partial opacity -->
 		<sequence id="3" next="999" >
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="225" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="200" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="175" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="150" />
 			</frame>
-			<frame wait="1">
+			<frame wait="0">
 				<pic id="0" alpha="125" />
 			</frame>
 		</sequence>

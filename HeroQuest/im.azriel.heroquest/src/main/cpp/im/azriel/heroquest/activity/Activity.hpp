@@ -178,7 +178,7 @@ template<class T>
 Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* const environment,
         const GlPainter* const painter) :
 		        thread(nullptr),
-		        delay((Uint32) (1000.0 / DEFAULT_FPS)),
+		        delay((Uint32) (500.0 / DEFAULT_FPS)),
 		        activityLock(SDL_CreateMutex()),
 		        environment(environment),
 		        painter(painter),

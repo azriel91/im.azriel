@@ -35,10 +35,24 @@ namespace activity {
 
 class MainMenuActivity : public Activity<void> {
 private:
-	MenuItem* startMenuItem;
-	MenuItem* controlSettingsMenuItem;
+	/**
+	 * The height of a menu item.
+	 */
+	static constexpr int MENU_ITEM_HEIGHT = 50;
+	/**
+	 * The width of a menu item.
+	 */
+	static constexpr int MENU_ITEM_WIDTH = 350;
 
-	MenuItem* activeMenuItem;
+private:
+	/**
+	 * List of all menu items on the main menu.
+	 */
+	vector<MenuItem*>* const menuItems;
+	/**
+	 * The index of the currently selected menu item.
+	 */
+	int activeMenuItemIndex;
 
 public:
 	MainMenuActivity(const im::azriel::heroquest::environment::Environment* const environment,
@@ -63,6 +77,16 @@ public:
 
 protected:
 	/**
+	 * The activity event loop to be implemented by subclasses.
+	 */
+	void activityLoop();
+	/**
+	 * Loads the menu items from the current theme.
+	 *
+	 * @param menuItemIds the ids of the menu items to load
+	 */
+	void loadMenuItems(const vector<string> menuItemIds);
+	/**
 	 * Function called before this activity runs. This is called after initialize and after every resume.
 	 */
 	void preHook();
@@ -71,9 +95,13 @@ protected:
 	 */
 	void postHook();
 	/**
-	 * The activity event loop to be implemented by subclasses.
+	 * Selects the next menu item.
 	 */
-	void activityLoop();
+	void selectNextMenuItem();
+	/**
+	 * Selects the previous menu item.
+	 */
+	void selectPreviousMenuItem();
 };
 
 } /* namespace activity */

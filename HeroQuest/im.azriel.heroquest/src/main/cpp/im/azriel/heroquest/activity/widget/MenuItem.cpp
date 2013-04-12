@@ -13,8 +13,8 @@ namespace heroquest {
 namespace activity {
 namespace widget {
 
-constexpr int MenuItem::NON_FOCUSED_SEQUENCE;
-constexpr int MenuItem::FOCUSED_SEQUENCE;
+constexpr int MenuItem::TRANSITION_TO_ACTIVE_SEQUENCE;
+constexpr int MenuItem::TRANSITION_TO_INACTIVE_SEQUENCE;
 
 MenuItem::MenuItem(const GlPainter* const painter, const WidgetData* const widgetData) :
 		Widget(painter, widgetData), focused(false) {
@@ -31,7 +31,7 @@ void MenuItem::setFocused(const bool focused) {
 		return;
 	}
 	this->focused = focused;
-	selectSequence(this->focused ? FOCUSED_SEQUENCE : NON_FOCUSED_SEQUENCE);
+	selectSequence(this->focused ? TRANSITION_TO_ACTIVE_SEQUENCE : TRANSITION_TO_INACTIVE_SEQUENCE);
 }
 
 } /* namespace widget */

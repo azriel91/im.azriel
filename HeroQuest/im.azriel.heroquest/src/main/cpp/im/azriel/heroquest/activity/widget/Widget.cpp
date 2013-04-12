@@ -106,18 +106,21 @@ void Widget::update() {
 	} else if (this->currentFrameId == frames->size() - 1) {
 		// we are on the last frame
 		auto const sequences = this->data->getSequences();
+		int nextSequenceId = this->currentSequence->getNextSequenceId();
 
-		switch (this->currentSequence->getNextSequenceId()) {
+		switch (nextSequenceId) {
 			// if the sequence does not loop, we stop
 			case NO_NEXT:
 				break;
 
 			case FIRST_SEQUENCE:
 				this->currentSequence = sequences->at(0);
+				this->currentFrameId = 0;
 				this->clock = -1;
 				break;
 
 			default:
+				this->currentSequence = sequences->at(nextSequenceId);
 				this->currentFrameId = 0;
 				this->clock = -1;
 				break;
