@@ -101,7 +101,7 @@ protected:
 public:
 	Activity(const im::azriel::heroquest::environment::Environment* const environment, const GlPainter* const painter);
 	Activity(const im::azriel::heroquest::environment::Environment* const environment, const GlPainter* const painter,
-	        const double fps);
+			const double fps);
 	virtual ~Activity();
 
 	/**
@@ -126,18 +126,22 @@ public:
 	void fireSynchronizedControlKeyEvents() const;
 	/**
 	 * Gets the exit code of this activity.
+	 *
+	 * @return the exit code
 	 */
-	virtual ExitCode getExitCode();
+	virtual ExitCode getExitCode() const;
 	/**
 	 * Returns the stack activity if this activity ends its Task with the STACK exit code.
 	 *
 	 * @return the activity
 	 */
-	Activity<>* getStackActivity();
+	Activity<>* getStackActivity() const;
 	/**
-	 * Gets the return value of this
+	 * Gets the return value of this activity.
+	 *
+	 * @return the return value
 	 */
-	virtual T* getReturnValue();
+	virtual T* getReturnValue() const;
 
 	/**
 	 * Function called when this activity is first started. This runs on the main thread. Resources in this method call
@@ -148,6 +152,7 @@ public:
 	 * Function called when this activity is terminated. This runs on the main thread.
 	 */
 	virtual void finalize();
+
 protected:
 	/**
 	 * Function called before this activity runs. This is called after initialize and after every resume.
@@ -176,31 +181,31 @@ Logger* const Activity<T>::LOGGER = Logger::getLogger("Activity<T>::LOGGER");
 
 template<class T>
 Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* const environment,
-        const GlPainter* const painter) :
-		        thread(nullptr),
-		        delay((Uint32) (500.0 / DEFAULT_FPS)),
-		        activityLock(SDL_CreateMutex()),
-		        environment(environment),
-		        painter(painter),
-		        running(false),
-		        exitCode(NONE),
-		        stackActivity(nullptr),
-		        returnValue(nullptr) {
+		const GlPainter* const painter) :
+				thread(nullptr),
+				delay((Uint32) (500.0 / DEFAULT_FPS)),
+				activityLock(SDL_CreateMutex()),
+				environment(environment),
+				painter(painter),
+				running(false),
+				exitCode(NONE),
+				stackActivity(nullptr),
+				returnValue(nullptr) {
 
 }
 
 template<class T>
 Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* const environment,
-        const GlPainter* const painter, const double fps) :
-		        thread(nullptr),
-		        delay((Uint32) (1000.0 / fps)),
-		        activityLock(SDL_CreateMutex()),
-		        environment(environment),
-		        painter(painter),
-		        running(false),
-		        exitCode(NONE),
-		        stackActivity(nullptr),
-		        returnValue(nullptr) {
+		const GlPainter* const painter, const double fps) :
+				thread(nullptr),
+				delay((Uint32) (1000.0 / fps)),
+				activityLock(SDL_CreateMutex()),
+				environment(environment),
+				painter(painter),
+				running(false),
+				exitCode(NONE),
+				stackActivity(nullptr),
+				returnValue(nullptr) {
 
 }
 
@@ -303,17 +308,17 @@ void Activity<T>::fireSynchronizedControlKeyEvents() const {
 }
 
 template<class T>
-typename Activity<T>::ExitCode Activity<T>::getExitCode() {
+typename Activity<T>::ExitCode Activity<T>::getExitCode() const {
 	return this->exitCode;
 }
 
 template<class T>
-Activity<>* Activity<T>::getStackActivity() {
+Activity<>* Activity<T>::getStackActivity() const {
 	return this->stackActivity;
 }
 
 template<class T>
-T* Activity<T>::getReturnValue() {
+T* Activity<T>::getReturnValue() const {
 	return nullptr;
 }
 

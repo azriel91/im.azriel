@@ -1,0 +1,5 @@
+<configuration>
+	<objects>
+		<reference id="0" path="assets/joe/joe.xml" />
+	</objects>
+</configuration>

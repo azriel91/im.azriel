@@ -56,7 +56,7 @@ private:
 
 public:
 	MainMenuActivity(const im::azriel::heroquest::environment::Environment* const environment,
-	        const GlPainter* const painter);
+			const GlPainter* const painter);
 	virtual ~MainMenuActivity();
 	/**
 	 * Function that requests this Activity to redraw itself. Should only be called by the UI thread.
