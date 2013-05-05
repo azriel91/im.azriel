@@ -30,7 +30,7 @@ public:
 	 *
 	 * @return the exitCode
 	 */
-	int join();
+	const int join();
 
 private:
 	SDL_Thread* thread;
