@@ -23,7 +23,7 @@ void Thread::start() {
 	this->thread = SDL_CreateThread(runThread, this);
 }
 
-int Thread::join() {
+const int Thread::join() {
 	int exitCode = 0;
 	SDL_WaitThread(thread, &exitCode);
 	return exitCode;
