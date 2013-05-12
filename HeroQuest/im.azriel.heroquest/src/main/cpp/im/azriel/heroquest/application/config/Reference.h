@@ -5,8 +5,8 @@
  *      Author: azriel
  */
 
-#ifndef __IM_AZRIEL_HEROQUEST_ACTIVITY_LOADING_CONFIG__REFERENCE_H_
-#define __IM_AZRIEL_HEROQUEST_ACTIVITY_LOADING_CONFIG__REFERENCE_H_
+#ifndef __IM_AZRIEL_HEROQUEST_APPLICATION_CONFIG__REFERENCE_H_
+#define __IM_AZRIEL_HEROQUEST_APPLICATION_CONFIG__REFERENCE_H_
 
 #include <string>
 
@@ -15,8 +15,7 @@ using namespace std;
 namespace im {
 namespace azriel {
 namespace heroquest {
-namespace activity {
-namespace loading {
+namespace application {
 namespace config {
 
 class Reference {
@@ -48,9 +47,9 @@ public:
 };
 
 } /* namespace config */
-} /* namespace loading */
-} /* namespace activity */
+} /* namespace application */
 } /* namespace heroquest */
 } /* namespace azriel */
 } /* namespace im */
-#endif /* __IM_AZRIEL_HEROQUEST_ACTIVITY_LOADING_CONFIG__REFERENCE_H_ */
+
+#endif /* __IM_AZRIEL_HEROQUEST_APPLICATION_CONFIG__REFERENCE_H_ */

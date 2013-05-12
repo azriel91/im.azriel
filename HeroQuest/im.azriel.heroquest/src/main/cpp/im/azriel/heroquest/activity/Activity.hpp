@@ -115,7 +115,7 @@ public:
 	/**
 	 * Main function call for thread.
 	 */
-	int run();
+	const int run();
 	/**
 	 * Function that requests this Activity to redraw itself. Should only be called by the UI thread.
 	 */
@@ -231,7 +231,7 @@ void Activity<T>::start() {
 }
 
 template<class T>
-int Activity<T>::run() {
+const int Activity<T>::run() {
 	this->exitCode = ExitCode::SUCCESS;
 
 	// run prehook in main thread
@@ -244,7 +244,7 @@ int Activity<T>::run() {
 		}
 		virtual ~PrehookRunner() {
 		}
-		int run() {
+		const int run() {
 			this->activity->preHook();
 			return 0;
 		}
@@ -273,7 +273,7 @@ int Activity<T>::run() {
 		}
 		virtual ~PosthookRunner() {
 		}
-		int run() {
+		const int run() {
 			this->activity->postHook();
 			return 0;
 		}

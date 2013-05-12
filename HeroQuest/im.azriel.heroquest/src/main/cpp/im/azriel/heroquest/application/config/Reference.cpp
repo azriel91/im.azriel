@@ -5,13 +5,12 @@
  *      Author: azriel
  */
 
-#include "Reference.h"
+#include "im/azriel/heroquest/application/config/Reference.h"
 
 namespace im {
 namespace azriel {
 namespace heroquest {
-namespace activity {
-namespace loading {
+namespace application {
 namespace config {
 
 Reference::Reference(const int id, const string path) : id(id), path(path) {
@@ -29,8 +28,7 @@ const string Reference::getPath() const {
 }
 
 } /* namespace config */
-} /* namespace loading */
-} /* namespace activity */
+} /* namespace application */
 } /* namespace heroquest */
 } /* namespace azriel */
 } /* namespace im */

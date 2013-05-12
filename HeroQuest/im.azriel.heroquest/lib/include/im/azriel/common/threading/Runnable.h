@@ -23,7 +23,7 @@ public:
 	 *
 	 * @return the exit code, which is implementation specific
 	 */
-	virtual int run() = 0;
+	virtual const int run() = 0;
 };
 
 } /* namespace threading */

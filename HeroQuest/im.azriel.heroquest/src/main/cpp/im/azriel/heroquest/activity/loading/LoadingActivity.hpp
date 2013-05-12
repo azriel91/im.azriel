@@ -9,9 +9,9 @@
 #define __IM_AZRIEL_HEROQUEST_ACTIVITY_LOADING__LOADINGACTIVITY_H_
 
 #include "im/azriel/heroquest/activity/Activity.hpp"
-#include "im/azriel/heroquest/activity/loading/config/ApplicationConfiguration.h"
+#include "im/azriel/heroquest/application/config/ApplicationConfiguration.h"
 
-using namespace im::azriel::heroquest::activity::loading::config;
+using namespace im::azriel::heroquest::application::config;
 
 namespace im {
 namespace azriel {
@@ -19,7 +19,8 @@ namespace heroquest {
 namespace activity {
 namespace loading {
 
-class LoadingActivity: public Activity<const ApplicationConfiguration> {
+template<class T>
+class LoadingActivity: public Activity<T> {
 private:
 	const ApplicationConfiguration* objectConfiguration;
 
@@ -56,7 +57,54 @@ protected:
 	 * The activity event loop to be implemented by subclasses.
 	 */
 	void activityLoop();
+	/**
+	 * Function called before this activity runs. This is called after initialize and after every resume.
+	 */
+	void preHook();
+	/**
+	 * Function when this activity stops running. This is called before finalize and after every stop.
+	 */
+	void postHook();
 };
+
+template<class T>
+LoadingActivity<T>::LoadingActivity(const im::azriel::heroquest::environment::Environment* const environment,
+		const GlPainter* const painter) :
+		Activity<const ApplicationConfiguration>(environment, painter), objectConfiguration(nullptr) {
+}
+
+template<class T>
+LoadingActivity<T>::~LoadingActivity() {
+}
+
+template<class T>
+void LoadingActivity<T>::redraw() {
+}
+
+template<class T>
+void LoadingActivity<T>::controlKeyPressed(const ControlKeyEvent* const event) {
+}
+
+template<class T>
+void LoadingActivity<T>::controlKeyReleased(const ControlKeyEvent* const event) {
+}
+
+template<class T>
+const ApplicationConfiguration* LoadingActivity<T>::getReturnValue() const {
+	return this->objectConfiguration;
+}
+
+template<class T>
+void LoadingActivity<T>::activityLoop() {
+}
+
+template<class T>
+void LoadingActivity<T>::preHook() {
+}
+
+template<class T>
+void LoadingActivity<T>::postHook() {
+}
 
 } /* namespace loading */
 } /* namespace activity */
