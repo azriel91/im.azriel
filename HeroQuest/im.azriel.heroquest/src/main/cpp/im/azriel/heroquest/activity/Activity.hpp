@@ -71,6 +71,10 @@ private:
 	 * Lock for starting/stopping this activity
 	 */
 	SDL_mutex* const activityLock;
+	/**
+	 * The value returned by this activity when it ends.
+	 */
+	T* returnValue;
 
 protected:
 	/**
@@ -93,10 +97,6 @@ protected:
 	 * The activity to run on top of this activity, should this activity return with a STACK exit code.
 	 */
 	Activity* stackActivity;
-	/**
-	 * The value returned by this activity when it ends.
-	 */
-	T* returnValue;
 
 public:
 	Activity(const im::azriel::heroquest::environment::Environment* const environment, const GlPainter* const painter);
@@ -155,6 +155,10 @@ public:
 
 protected:
 	/**
+	 * The activity event loop to be implemented by subclasses.
+	 */
+	virtual void activityLoop() = 0;
+	/**
 	 * Function called before this activity runs. This is called after initialize and after every resume.
 	 */
 	virtual void preHook();
@@ -163,9 +167,11 @@ protected:
 	 */
 	virtual void postHook();
 	/**
-	 * The activity event loop to be implemented by subclasses.
+	 * Set the value returned by this activity when it ends.
+	 *
+	 * @param returnValue the return value
 	 */
-	virtual void activityLoop() = 0;
+	void setReturnValue(const T* const returnValue);
 
 private:
 	/**
@@ -185,13 +191,12 @@ Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* con
 				thread(nullptr),
 				delay((Uint32) (500.0 / DEFAULT_FPS)),
 				activityLock(SDL_CreateMutex()),
+				returnValue(nullptr),
 				environment(environment),
 				painter(painter),
 				running(false),
 				exitCode(NONE),
-				stackActivity(nullptr),
-				returnValue(nullptr) {
-
+				stackActivity(nullptr) {
 }
 
 template<class T>
@@ -200,13 +205,12 @@ Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* con
 				thread(nullptr),
 				delay((Uint32) (1000.0 / fps)),
 				activityLock(SDL_CreateMutex()),
+				returnValue(nullptr),
 				environment(environment),
 				painter(painter),
 				running(false),
 				exitCode(NONE),
-				stackActivity(nullptr),
-				returnValue(nullptr) {
-
+				stackActivity(nullptr) {
 }
 
 template<class T>
@@ -319,7 +323,7 @@ Activity<>* Activity<T>::getStackActivity() const {
 
 template<class T>
 T* Activity<T>::getReturnValue() const {
-	return nullptr;
+	return this->returnValue;
 }
 
 template<class T>
@@ -336,6 +340,11 @@ void Activity<T>::preHook() {
 
 template<class T>
 void Activity<T>::postHook() {
+}
+
+template<class T>
+void Activity<T>::setReturnValue(const T* const returnValue) {
+	this->returnValue = returnValue;
 }
 
 template <class T>
