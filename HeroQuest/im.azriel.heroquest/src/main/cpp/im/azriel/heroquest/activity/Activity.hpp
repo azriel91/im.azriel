@@ -60,21 +60,25 @@ private:
 
 #endif
 	/**
-	 * Thread that runs this activity.
+	 * Lock for starting/stopping this activity
 	 */
-	Thread* thread;
+	SDL_mutex* const activityLock;
 	/**
 	 * Time delay between frames (in ms).
 	 */
 	const Uint32 delay;
 	/**
-	 * Lock for starting/stopping this activity
+	 * This activity's exit code.
 	 */
-	SDL_mutex* const activityLock;
+	ExitCode exitCode;
 	/**
 	 * The value returned by this activity when it ends.
 	 */
 	T* returnValue;
+	/**
+	 * Thread that runs this activity.
+	 */
+	Thread* thread;
 
 protected:
 	/**
@@ -89,10 +93,6 @@ protected:
 	 * Whether this activity is running.
 	 */
 	bool running;
-	/**
-	 * This activity's exit code.
-	 */
-	ExitCode exitCode;
 	/**
 	 * The activity to run on top of this activity, should this activity return with a STACK exit code.
 	 */
@@ -159,6 +159,19 @@ protected:
 	 */
 	virtual void activityLoop() = 0;
 	/**
+	 * Ends the current activity with the specified exit code, which must be one of:
+	 * <ul>
+	 * <li>ExitCode::SUCCESS</li>
+	 * <li>ExitCode::STACK</li>
+	 * <li>ExitCode::FAIL</li>
+	 * </ul>
+	 *
+	 * If ExitCode::STACK is provided, then by contract the caller must have already set the value of the stackActivity.
+	 *
+	 * @param exitCode the exit code
+	 */
+	void endActivity(const ExitCode exitCode);
+	/**
 	 * Function called before this activity runs. This is called after initialize and after every resume.
 	 */
 	virtual void preHook();
@@ -188,28 +201,28 @@ Logger* const Activity<T>::LOGGER = Logger::getLogger("Activity<T>::LOGGER");
 template<class T>
 Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* const environment,
 		const GlPainter* const painter) :
-				thread(nullptr),
-				delay((Uint32) (500.0 / DEFAULT_FPS)),
 				activityLock(SDL_CreateMutex()),
+				delay((Uint32) (500.0 / DEFAULT_FPS)),
+				exitCode(NONE),
 				returnValue(nullptr),
+				thread(nullptr),
 				environment(environment),
 				painter(painter),
 				running(false),
-				exitCode(NONE),
 				stackActivity(nullptr) {
 }
 
 template<class T>
 Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* const environment,
 		const GlPainter* const painter, const double fps) :
-				thread(nullptr),
-				delay((Uint32) (1000.0 / fps)),
 				activityLock(SDL_CreateMutex()),
+				delay((Uint32) (1000.0 / fps)),
+				exitCode(NONE),
 				returnValue(nullptr),
+				thread(nullptr),
 				environment(environment),
 				painter(painter),
 				running(false),
-				exitCode(NONE),
 				stackActivity(nullptr) {
 }
 
@@ -332,6 +345,12 @@ void Activity<T>::initialize() {
 
 template<class T>
 void Activity<T>::finalize() {
+}
+
+template<class T>
+void Activity<T>::endActivity(const ExitCode exitCode) {
+	this->exitCode = exitCode;
+	this->running = false;
 }
 
 template<class T>

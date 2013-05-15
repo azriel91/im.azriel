@@ -31,8 +31,7 @@ void StartUpActivity::controlKeyReleased(const ControlKeyEvent* const event) {
 
 void StartUpActivity::activityLoop() {
 	this->stackActivity = new MainMenuActivity(this->environment, this->painter);
-	this->exitCode = ExitCode::STACK;
-	this->running = false;
+	endActivity(ExitCode::STACK);
 }
 
 } /* namespace activity */
