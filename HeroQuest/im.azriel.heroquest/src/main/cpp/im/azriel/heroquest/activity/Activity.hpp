@@ -76,6 +76,14 @@ private:
 	 */
 	T* returnValue;
 	/**
+	 * Whether this activity is running.
+	 */
+	bool running;
+	/**
+	 * The activity to run on top of this activity, should this activity return with a STACK exit code.
+	 */
+	Activity* stackActivity;
+	/**
 	 * Thread that runs this activity.
 	 */
 	Thread* thread;
@@ -89,14 +97,6 @@ protected:
 	 * The painter instance to render images to the screen.
 	 */
 	const GlPainter* painter;
-	/**
-	 * Whether this activity is running.
-	 */
-	bool running;
-	/**
-	 * The activity to run on top of this activity, should this activity return with a STACK exit code.
-	 */
-	Activity* stackActivity;
 
 public:
 	Activity(const im::azriel::heroquest::environment::Environment* const environment, const GlPainter* const painter);
@@ -185,6 +185,12 @@ protected:
 	 * @param returnValue the return value
 	 */
 	void setReturnValue(const T* const returnValue);
+	/**
+	 * Set the activity to be used as the stack activity over this activity when it ends.
+	 *
+	 * @param stackActivity the stack activity
+	 */
+	void setStackActivity(Activity* const stackActivity);
 
 private:
 	/**
@@ -205,11 +211,11 @@ Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* con
 				delay((Uint32) (500.0 / DEFAULT_FPS)),
 				exitCode(NONE),
 				returnValue(nullptr),
+				running(false),
+				stackActivity(nullptr),
 				thread(nullptr),
 				environment(environment),
-				painter(painter),
-				running(false),
-				stackActivity(nullptr) {
+				painter(painter) {
 }
 
 template<class T>
@@ -219,11 +225,11 @@ Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* con
 				delay((Uint32) (1000.0 / fps)),
 				exitCode(NONE),
 				returnValue(nullptr),
+				running(false),
+				stackActivity(nullptr),
 				thread(nullptr),
 				environment(environment),
-				painter(painter),
-				running(false),
-				stackActivity(nullptr) {
+				painter(painter) {
 }
 
 template<class T>
@@ -364,6 +370,11 @@ void Activity<T>::postHook() {
 template<class T>
 void Activity<T>::setReturnValue(const T* const returnValue) {
 	this->returnValue = returnValue;
+}
+
+template<class T>
+void Activity<T>::setStackActivity(Activity* const stackActivity) {
+	this->stackActivity = stackActivity;
 }
 
 template <class T>
