@@ -195,7 +195,7 @@ void Job<T>::start() {
 				return 0;
 			}
 		} runner = { this };
-		this->jobRunner = runner;
+		this->jobRunner = &runner;
 
 		this->thread = new Thread(this->jobRunner);
 		this->thread->start();
