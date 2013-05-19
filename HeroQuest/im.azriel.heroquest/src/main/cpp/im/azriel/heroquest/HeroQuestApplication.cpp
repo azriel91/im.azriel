@@ -21,7 +21,7 @@ HeroQuestApplication::HeroQuestApplication(const int viewportWidth, const int vi
 		        theme(Theme::loadFromFile("theme.xml")),
 		        environment(initEnvironment(viewportWidth, viewportHeight, theme)),
 		        painter(initGlPainter(theme)),
-		        activityStack(new stack<Activity<>*>()),
+		        activityStack(new stack<Activity*>()),
 		        currentActivity(new StartUpActivity(this->environment, this->painter)) {
 }
 
@@ -54,9 +54,9 @@ void HeroQuestApplication::handleActivityChange() {
 		return;
 	}
 
-	Activity<>::ExitCode exitCode = this->currentActivity->getExitCode();
+	Activity::ExitCode exitCode = this->currentActivity->getExitCode();
 	switch (exitCode) {
-		case Activity<>::ExitCode::SUCCESS:
+		case Activity::ExitCode::SUCCESS:
 #ifdef ENABLE_LOGGING
 			HeroQuestApplication::LOGGER->info("Activity %s returned with exit code: %d.",
 			        typeid(*this->currentActivity).name(), exitCode);
@@ -80,7 +80,7 @@ void HeroQuestApplication::handleActivityChange() {
 			}
 			break;
 
-		case Activity<>::ExitCode::FAIL:
+		case Activity::ExitCode::FAIL:
 #ifdef ENABLE_LOGGING
 			HeroQuestApplication::LOGGER->error("Activity %s returned with exit code: %d.",
 			        typeid(*this->currentActivity).name(), exitCode);
@@ -102,7 +102,7 @@ void HeroQuestApplication::handleActivityChange() {
 			}
 			break;
 
-		case Activity<>::ExitCode::STACK: {
+		case Activity::ExitCode::STACK: {
 #ifdef ENABLE_LOGGING
 			HeroQuestApplication::LOGGER->info("Activity %s returned with exit code: %d.",
 			        typeid(*this->currentActivity).name(), exitCode);
@@ -110,7 +110,7 @@ void HeroQuestApplication::handleActivityChange() {
 			this->currentActivity->stop();
 			unregisterControlKeyListener(this->currentActivity);
 			this->activityStack->push(this->currentActivity);
-			Activity<>* stackActivity = this->currentActivity->getStackActivity();
+			Activity* stackActivity = this->currentActivity->getStackActivity();
 			this->currentActivity = stackActivity;
 			stackActivity->initialize();
 			registerControlKeyListener(this->currentActivity);
@@ -167,7 +167,7 @@ void HeroQuestApplication::handleMouseEvent(SDL_Event* const event) {
 
 void HeroQuestApplication::handleUserEvent(SDL_Event* const event) {
 	switch (event->user.code) {
-		case Activity<>::ENDED:
+		case Activity::ENDED:
 			handleActivityChange();
 			break;
 	}

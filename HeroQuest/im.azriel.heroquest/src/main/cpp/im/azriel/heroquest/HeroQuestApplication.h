@@ -15,7 +15,7 @@
 #include "im/azriel/desktop/application/Application.h"
 #include "im/azriel/desktop/graphics/gl/painter/GlPainter.h"
 #include "im/azriel/desktop/theme/Theme.h"
-#include "im/azriel/heroquest/activity/Activity.hpp"
+#include "im/azriel/heroquest/activity/Activity.h"
 #include "im/azriel/heroquest/activity/StartUpActivity.h"
 #include "im/azriel/heroquest/environment/Environment.h"
 #include "im/azriel/heroquest/input/Controls.h"
@@ -64,11 +64,11 @@ protected:
 	/**
 	 * The activity stack.
 	 */
-	stack<Activity<>*>* const activityStack;
+	stack<Activity*>* const activityStack;
 	/**
 	 * The currently active activity.
 	 */
-	Activity<>* currentActivity;
+	Activity* currentActivity;
 
 public:
 	/**

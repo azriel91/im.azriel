@@ -8,10 +8,10 @@
 #ifndef __IM_AZRIEL_HEROQUEST_ACTIVITY_LOADING__LOADINGACTIVITY_H_
 #define __IM_AZRIEL_HEROQUEST_ACTIVITY_LOADING__LOADINGACTIVITY_H_
 
-#include "im/azriel/heroquest/activity/Activity.hpp"
-#include "im/azriel/heroquest/application/config/ApplicationConfiguration.h"
+#include "im/azriel/common/job/Job.hpp"
+#include "im/azriel/heroquest/activity/Activity.h"
 
-using namespace im::azriel::heroquest::application::config;
+using namespace im::azriel::common::job;
 
 namespace im {
 namespace azriel {
@@ -20,13 +20,13 @@ namespace activity {
 namespace loading {
 
 template<class T>
-class LoadingActivity: public Activity<T> {
+class LoadingActivity: public Activity {
 private:
-	const ApplicationConfiguration* objectConfiguration;
+	Job<T>* const job;
 
 public:
 	LoadingActivity(const im::azriel::heroquest::environment::Environment* const environment,
-			const GlPainter* const painter);
+	        const GlPainter* const painter, Job<T>* const job);
 	virtual ~LoadingActivity();
 
 	/**
@@ -45,12 +45,6 @@ public:
 	 * @param event the ControlKeyEvent carrying details of the key release
 	 */
 	virtual void controlKeyReleased(const ControlKeyEvent* const event);
-	/**
-	 * Gets the loaded HeroQuestConfiguration.
-	 *
-	 * @return the loaded HeroQuestConfiguration
-	 */
-	virtual const ApplicationConfiguration* getReturnValue() const;
 
 protected:
 	/**
@@ -69,8 +63,8 @@ protected:
 
 template<class T>
 LoadingActivity<T>::LoadingActivity(const im::azriel::heroquest::environment::Environment* const environment,
-		const GlPainter* const painter) :
-		Activity<const ApplicationConfiguration>(environment, painter), objectConfiguration(nullptr) {
+		const GlPainter* const painter, Job<T>* const job) :
+		Activity(environment, painter), job(job) {
 }
 
 template<class T>
@@ -79,6 +73,9 @@ LoadingActivity<T>::~LoadingActivity() {
 
 template<class T>
 void LoadingActivity<T>::redraw() {
+	glClear(GL_COLOR_BUFFER_BIT);
+	const string statusMessage = this->job->getStatusMessage();
+	this->painter->paintString(statusMessage, 0, 0);
 }
 
 template<class T>
@@ -90,16 +87,17 @@ void LoadingActivity<T>::controlKeyReleased(const ControlKeyEvent* const event) 
 }
 
 template<class T>
-const ApplicationConfiguration* LoadingActivity<T>::getReturnValue() const {
-	return this->objectConfiguration;
-}
-
-template<class T>
 void LoadingActivity<T>::activityLoop() {
+	if (this->job->isComplete()) {
+		LoadingActivity<T>::endActivity(LoadingActivity<T>::ExitCode::SUCCESS);
+	}
 }
 
 template<class T>
 void LoadingActivity<T>::preHook() {
+	if (!this->job->isComplete() && !this->job->isRunning()) {
+		this->job->start();
+	}
 }
 
 template<class T>

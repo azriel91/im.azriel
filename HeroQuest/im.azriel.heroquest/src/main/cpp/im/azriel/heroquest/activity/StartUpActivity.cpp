@@ -14,7 +14,7 @@ namespace activity {
 
 StartUpActivity::StartUpActivity(const im::azriel::heroquest::environment::Environment* const environment,
 		const GlPainter* const painter) :
-		Activity<>(environment, painter) {
+		Activity(environment, painter) {
 }
 
 StartUpActivity::~StartUpActivity() {

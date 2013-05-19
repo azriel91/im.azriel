@@ -9,7 +9,7 @@
 #define __IM_AZRIEL_HEROQUEST_ACTIVITY__STARTUPACTIVITY_H_
 
 #include "im/azriel/desktop/graphics/gl/painter/GlPainter.h"
-#include "im/azriel/heroquest/activity/Activity.hpp"
+#include "im/azriel/heroquest/activity/Activity.h"
 #include "im/azriel/heroquest/activity/MainMenuActivity.h"
 #include "im/azriel/heroquest/environment/Environment.h"
 #include "im/azriel/heroquest/input/ControlKeyEvent.h"
@@ -24,7 +24,7 @@ namespace azriel {
 namespace heroquest {
 namespace activity {
 
-class StartUpActivity: public Activity<void> {
+class StartUpActivity: public Activity {
 
 public:
 	StartUpActivity(const im::azriel::heroquest::environment::Environment* const environment,

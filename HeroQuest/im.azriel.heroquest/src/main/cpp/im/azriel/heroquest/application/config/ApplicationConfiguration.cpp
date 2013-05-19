@@ -43,7 +43,7 @@ const ApplicationConfiguration* ApplicationConfiguration::loadApplicationConfigu
 
 Job<const ApplicationConfiguration*>* ApplicationConfiguration::loadApplicationConfigurationAsJob(
         const AssetConfiguration* const assetConfiguration) {
-	return nullptr;
+	return new ConfigLoadingJob(assetConfiguration);
 }
 
 const map<const int, const ObjectType*>* ApplicationConfiguration::loadObjectTypes(
@@ -86,15 +86,20 @@ const ApplicationConfiguration* ApplicationConfiguration::ConfigLoadingJob::doWo
 const map<const int, const ObjectType*>* ApplicationConfiguration::ConfigLoadingJob::loadObjectTypes(
         const vector<const Reference*>* const references) {
 	auto const objectTypeById = new map<const int, const ObjectType*>();
+	stringstream statusMessageStream;
+
 	for (auto const reference : *references) {
 		const int id = reference->getId();
 		const string path = reference->getPath();
 
-		setStatusMessage("Loading " + path);
+		statusMessageStream.str(string()); // clear the stream
+		statusMessageStream << "Loading " << path;
+		setStatusMessage(statusMessageStream.str());
 
 		auto const objectType = ObjectType::loadFromFile(path, id);
 		objectTypeById->insert(make_pair(id, objectType));
 	}
+
 	return objectTypeById;
 }
 

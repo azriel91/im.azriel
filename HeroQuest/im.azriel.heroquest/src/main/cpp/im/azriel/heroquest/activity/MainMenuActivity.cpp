@@ -17,7 +17,7 @@ constexpr int MainMenuActivity::MENU_ITEM_WIDTH;
 
 MainMenuActivity::MainMenuActivity(const im::azriel::heroquest::environment::Environment* const environment,
         const GlPainter* const painter) :
-		Activity<>(environment, painter), menuItems(new vector<MenuItem*>), activeMenuItemIndex(0) {
+		Activity(environment, painter), menuItems(new vector<MenuItem*>), activeMenuItemIndex(0) {
 }
 
 MainMenuActivity::~MainMenuActivity() {
@@ -33,8 +33,16 @@ void MainMenuActivity::redraw() {
 
 void MainMenuActivity::controlKeyPressed(const ControlKeyEvent* const event) {
 	switch (event->getCode()) {
-		case ControlKeyCode::ATTACK:
+		case ControlKeyCode::ATTACK: {
 			// TODO start activity
+			auto const assetConfiguration = AssetConfiguration::loadFromFile("assets/configuration.xml");
+			auto const applicationLoadingJob = ApplicationConfiguration::loadApplicationConfigurationAsJob(
+			        assetConfiguration);
+			LoadingActivity<const ApplicationConfiguration*>* loadingActivity = new LoadingActivity<
+			        const ApplicationConfiguration*>(this->environment, this->painter, applicationLoadingJob);
+			setStackActivity(loadingActivity);
+			endActivity(ExitCode::STACK);
+		}
 			break;
 
 		case ControlKeyCode::UP:
@@ -74,7 +82,7 @@ void MainMenuActivity::loadMenuItems(const vector<string> menuItemIds) {
 }
 
 void MainMenuActivity::preHook() {
-	loadMenuItems({"main/start-game", "main/control-settings"});
+	loadMenuItems( { "main/start-game", "main/control-settings" });
 
 	auto const startMenuItem = this->menuItems->at(0);
 	startMenuItem->setFocused(true);

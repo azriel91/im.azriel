@@ -17,8 +17,16 @@
 #include "im/azriel/desktop/theme/xml/Header.h"
 #include "im/azriel/desktop/theme/xml/ImageMetadata.h"
 #include "im/azriel/desktop/theme/xml/WidgetData.h"
-#include "im/azriel/heroquest/activity/Activity.hpp"
+#include "im/azriel/heroquest/activity/Activity.h"
 #include "im/azriel/heroquest/activity/widget/MenuItem.h"
+
+// --- TODO remove after testing
+#include "im/azriel/heroquest/application/config/ApplicationConfiguration.h"
+#include "im/azriel/heroquest/application/config/AssetConfiguration.h"
+#include "im/azriel/heroquest/activity/loading/LoadingActivity.hpp"
+using namespace im::azriel::heroquest::activity::loading;
+using namespace im::azriel::heroquest::application::config;
+// ---
 
 using namespace std;
 
@@ -33,7 +41,7 @@ namespace azriel {
 namespace heroquest {
 namespace activity {
 
-class MainMenuActivity : public Activity<void> {
+class MainMenuActivity : public Activity {
 private:
 	/**
 	 * The height of a menu item.

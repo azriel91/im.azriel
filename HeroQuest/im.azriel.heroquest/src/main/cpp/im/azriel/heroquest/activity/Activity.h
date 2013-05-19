@@ -1,5 +1,5 @@
 /*
- * Activity.hpp
+ * Activity.h
  *
  *  Created on: 3/02/2013
  *      Author: azriel
@@ -33,7 +33,6 @@ namespace azriel {
 namespace heroquest {
 namespace activity {
 
-template<class T = void>
 class Activity: public Runnable, public ControlKeyListener {
 
 public:
@@ -71,10 +70,6 @@ private:
 	 * This activity's exit code.
 	 */
 	ExitCode exitCode;
-	/**
-	 * The value returned by this activity when it ends.
-	 */
-	T* returnValue;
 	/**
 	 * Whether this activity is running.
 	 */
@@ -135,13 +130,7 @@ public:
 	 *
 	 * @return the activity
 	 */
-	Activity<>* getStackActivity() const;
-	/**
-	 * Gets the return value of this activity.
-	 *
-	 * @return the return value
-	 */
-	virtual T* getReturnValue() const;
+	Activity* getStackActivity() const;
 
 	/**
 	 * Function called when this activity is first started. This runs on the main thread. Resources in this method call
@@ -180,12 +169,6 @@ protected:
 	 */
 	virtual void postHook();
 	/**
-	 * Set the value returned by this activity when it ends.
-	 *
-	 * @param returnValue the return value
-	 */
-	void setReturnValue(const T* const returnValue);
-	/**
 	 * Set the activity to be used as the stack activity over this activity when it ends.
 	 *
 	 * @param stackActivity the stack activity
@@ -198,191 +181,6 @@ private:
 	 */
 	void requestRedraw();
 };
-
-#ifdef ENABLE_LOGGING
-template<class T>
-Logger* const Activity<T>::LOGGER = Logger::getLogger("Activity<T>::LOGGER");
-#endif
-
-template<class T>
-Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* const environment,
-		const GlPainter* const painter) :
-				activityLock(SDL_CreateMutex()),
-				delay((Uint32) (500.0 / DEFAULT_FPS)),
-				exitCode(NONE),
-				returnValue(nullptr),
-				running(false),
-				stackActivity(nullptr),
-				thread(nullptr),
-				environment(environment),
-				painter(painter) {
-}
-
-template<class T>
-Activity<T>::Activity(const im::azriel::heroquest::environment::Environment* const environment,
-		const GlPainter* const painter, const double fps) :
-				activityLock(SDL_CreateMutex()),
-				delay((Uint32) (1000.0 / fps)),
-				exitCode(NONE),
-				returnValue(nullptr),
-				running(false),
-				stackActivity(nullptr),
-				thread(nullptr),
-				environment(environment),
-				painter(painter) {
-}
-
-template<class T>
-Activity<T>::~Activity() {
-	SDL_DestroyMutex(this->activityLock);
-}
-
-template<class T>
-void Activity<T>::start() {
-	this->running = true;
-	if (this->thread == nullptr) {
-#ifdef ENABLE_LOGGING
-		LOGGER->info("Starting Activity: [%s]", typeid(*this).name());
-#endif
-		this->thread = new Thread(this);
-		this->thread->start();
-	} else {
-#ifdef ENABLE_LOGGING
-		LOGGER->warn("Activity: [%s] started multiple times", typeid(*this).name());
-#endif
-	}
-}
-
-template<class T>
-const int Activity<T>::run() {
-	this->exitCode = ExitCode::SUCCESS;
-
-	// run prehook in main thread
-	class PrehookRunner: public Runnable {
-	private:
-		Activity* const activity;
-	public:
-		PrehookRunner(Activity* activity) :
-				activity(activity) {
-		}
-		virtual ~PrehookRunner() {
-		}
-		const int run() {
-			this->activity->preHook();
-			return 0;
-		}
-	} prehookRunner = { this };
-	Application::runInMainThread(&prehookRunner);
-
-	// activity loop
-	while (this->running) {
-		Uint32 startTime = SDL_GetTicks();
-
-		fireSynchronizedControlKeyEvents();
-		activityLoop();
-		requestRedraw();
-
-		Uint32 elapsedTime = SDL_GetTicks() - startTime;
-		SDL_Delay(max((Uint32) 0, this->delay - elapsedTime));
-	}
-
-	// run posthook in main thread
-	class PosthookRunner: public Runnable {
-	private:
-		Activity* const activity;
-	public:
-		PosthookRunner(Activity* activity) :
-				activity(activity) {
-		}
-		virtual ~PosthookRunner() {
-		}
-		const int run() {
-			this->activity->postHook();
-			return 0;
-		}
-	} posthookRunner = { this };
-	Application::runInMainThread(&posthookRunner);
-
-	SDL_Event userEvent;
-	userEvent.type = SDL_USEREVENT;
-	userEvent.user.code = Activity::ENDED;
-	SDL_PushEvent(&userEvent);
-
-	return this->exitCode;
-}
-
-template<class T>
-void Activity<T>::stop() {
-	this->running = false;
-	if (this->thread != nullptr) {
-		this->thread->join();
-		delete this->thread;
-		this->thread = nullptr;
-	}
-}
-
-template<class T>
-void Activity<T>::fireSynchronizedControlKeyEvents() const {
-	const Controls* const controls = this->environment->getControls();
-	auto const controlKeyInputSources = controls->getControlKeyInputSources();
-	for (auto const controlKeyInputSource : *controlKeyInputSources) {
-		controlKeyInputSource->fireEvents();
-	}
-}
-
-template<class T>
-typename Activity<T>::ExitCode Activity<T>::getExitCode() const {
-	return this->exitCode;
-}
-
-template<class T>
-Activity<>* Activity<T>::getStackActivity() const {
-	return this->stackActivity;
-}
-
-template<class T>
-T* Activity<T>::getReturnValue() const {
-	return this->returnValue;
-}
-
-template<class T>
-void Activity<T>::initialize() {
-}
-
-template<class T>
-void Activity<T>::finalize() {
-}
-
-template<class T>
-void Activity<T>::endActivity(const ExitCode exitCode) {
-	this->exitCode = exitCode;
-	this->running = false;
-}
-
-template<class T>
-void Activity<T>::preHook() {
-}
-
-template<class T>
-void Activity<T>::postHook() {
-}
-
-template<class T>
-void Activity<T>::setReturnValue(const T* const returnValue) {
-	this->returnValue = returnValue;
-}
-
-template<class T>
-void Activity<T>::setStackActivity(Activity* const stackActivity) {
-	this->stackActivity = stackActivity;
-}
-
-template <class T>
-void Activity<T>::requestRedraw() {
-	SDL_Event event;
-	event.type = SDL_VIDEOEXPOSE;
-	SDL_PushEvent(&event);
-}
 
 } /* namespace activity */
 } /* namespace heroquest */

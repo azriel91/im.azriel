@@ -10,6 +10,7 @@
 
 #include <map>
 #include <vector>
+#include <sstream>
 #include <string>
 
 #include "im/azriel/common/job/Job.hpp"

@@ -49,7 +49,7 @@ const AssetConfiguration* AssetConfiguration::loadFromFile(const string path) {
 
 const vector<const Reference*>* AssetConfiguration::deserializeReferences(const xml_node node) {
 	auto const references = new vector<const Reference*>();
-	auto referenceNodes = node.children("references");
+	auto referenceNodes = node.children("reference");
 	for (const xml_node referenceNode : referenceNodes) {
 		auto const reference = deserializeReference(referenceNode);
 		references->push_back(reference);
